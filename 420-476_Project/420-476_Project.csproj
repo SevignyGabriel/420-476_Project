@@ -166,6 +166,9 @@
     <Compile Include="Models\Reviews.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Roles.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tags.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
