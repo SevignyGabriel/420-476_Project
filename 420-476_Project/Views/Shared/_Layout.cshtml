@@ -9,25 +9,57 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <img src="~/Content/Images/logo.jpg" alt="Logo" class="navbar-brand logo" />
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nom de l'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("420-476 Project", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">All</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Electronic</a></li>
+                            <li><a href="#">Home</a></li>
+                            <li><a href="#">Music</a></li>
+                            <li><a href="#">Clothing</a></li>
+                            <li><a href="#">Health &amp; Beauty</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <select class="search-categories-list">
+                            <option>All</option>
+                            <option>Electronic</option>
+                            <option>Home</option>
+                            <option>Music</option>
+                            <option>Clothing</option>
+                            <option>Health &amp; Beauty</option>
+                            <option>SUPER LONG MESSAGE SUPER LONG MESSAGE SUPER LONG MESSAGE</option>
+                        </select>
+                        <input class="form-control search-bar" size="600" placeholder="Search" type="text">
+                        <input type="image" src="~/Content/Images/Magnifying_glass_icon.svg" class="btn btn-search" />
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Login", "Login", "Account")</li>
+                    <li>@Html.ActionLink("Register", "Register", "Account")</li>
+                    <li>@Html.ActionLink("Shopping Cart", "ShoppingCart", "ShoppingCart")</li>
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />

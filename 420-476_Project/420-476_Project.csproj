@@ -166,6 +166,9 @@
     <Compile Include="Models\Reviews.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Roles.cs">
+      <DependentUpon>DatabaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Tags.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -177,6 +180,16 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Images\eureka.hand-held.vacuum.jpg" />
+    <Content Include="Content\Images\logo.jpg" />
+    <Content Include="Content\Images\Magnifying_glass_icon.svg" />
+    <Content Include="Content\Images\master.of.the.universe.t-shirt.jpg" />
+    <Content Include="Content\Images\q-tips.box.jpg" />
+    <Content Include="Content\Images\samsung.galaxy.s5.white.jpg" />
+    <Content Include="Content\Images\santa.toilet.seat.cover.and.rug.set.jpg" />
+    <Content Include="Content\Images\sennheiser.hd.201.jpg" />
+    <Content Include="Content\Images\skeleton.skull.tea.spoon.jpg" />
+    <Content Include="Content\Images\torontoo.dragon.rythem.ocarina.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />

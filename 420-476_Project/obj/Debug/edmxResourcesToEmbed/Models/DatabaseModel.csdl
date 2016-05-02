@@ -74,6 +74,8 @@
     <Property Name="ShipAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
     <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+    <Property Name="RoleID" Type="Int32" />
+    <NavigationProperty Name="Roles" Relationship="DatabaseModel.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
   </EntityType>
   <Association Name="FK_Products_Categories">
     <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
@@ -171,5 +173,30 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="Tags" EntitySet="Tags" />
     </AssociationSet>
+    <EntitySet Name="Roles" EntityType="DatabaseModel.Roles" />
+    <AssociationSet Name="FK_Users_Roles" Association="DatabaseModel.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
   </EntityContainer>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Users" Relationship="DatabaseModel.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <Association Name="FK_Users_Roles">
+    <End Type="DatabaseModel.Roles" Role="Roles" Multiplicity="0..1" />
+    <End Type="DatabaseModel.Users" Role="Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>
