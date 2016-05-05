@@ -1,8 +1,31 @@
 ﻿@{
     ViewBag.Title = "Home Page";
+    if (Session["loggedIn"] != null)
+    {
+        if ((bool)Session["loggedIn"])
+        {
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.User;
+            switch (userLoggedIn.RoleID)
+            {
+                case 1:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+                case 2:
+                    Layout = "~/Views/Shared/_Moderator.cshtml";
+                    break;
+                case 3:
+                    Layout = "~/Views/Shared/_Admin.cshtml";
+                    break;
+                default:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+            }
+        }
+    }
 }
 
 <div class="jumbotron">
+<<<<<<< HEAD
     <h1>ASP.NET</h1>
     <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
     <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
@@ -27,5 +50,95 @@
         <h2>Web Hosting</h2>
         <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
         <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+=======
+    <h1>Best sellers</h1>
+    <div class="products-container">
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 2 })'>
+                    <img src='@Url.Content("~/Content/Images/samsung.galaxy.s5.white.jpg")' alt="Samsung Galaxy S5" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name">Samsung Galaxy S5 16GB - White</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 1 })'>
+                    <img src='@Url.Content("~/Content/Images/sennheiser.hd.201.jpg")' alt="Sennheiser HD 201" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Sennheiser HD 201</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 5 })'>
+                    <img src='@Url.Content("~/Content/Images/master.of.the.universe.t-shirt.jpg")' alt="Master of the Universe T-Shirt" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Master of the Universe T-Shirt</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 8 })'>
+                    <img src='@Url.Content("~/Content/Images/skeleton.skull.tea.spoon.jpg")' alt="Skeleton Skull Tea Spoon" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Skeleton Skull Tea Spoon</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 7 })'>
+                    <img src='@Url.Content("~/Content/Images/santa.toilet.seat.cover.and.rug.set.jpg")' alt="Santa toilet seat cover and rug set" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Santa toilet seat cover and rug set</p>
+        </div>
+    </div>
+</div>
+
+<div class="jumbotron">
+    <h1>Recently viewed</h1>
+    <div class="products-container">
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 6 })'>
+                    <img src='@Url.Content("~/Content/Images/q-tips.box.jpg")' alt="Q-tips Box" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name">Q-tips Box</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 4 })'>
+                    <img src='@Url.Content("~/Content/Images/torontoo.dragon.rythem.ocarina.jpg")' alt="Torontoo Dragon Rythem Ocarina" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Torontoo Dragon Rythem Ocarina</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 3 })'>
+                    <img src='@Url.Content("~/Content/Images/eureka.hand-held.vacuum.jpg")' alt="Eureka Hand-held Vacuum" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Eureka Hand-held Vacuum</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 1 })'>
+                    <img src='@Url.Content("~/Content/Images/sennheiser.hd.201.jpg")' alt="Sennheiser HD 201" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Sennheiser HD 201</p>
+        </div>
+        <div class="product-container">
+            <div class="image-container">
+                <a href='@Url.Action("Details", "Products", new { id = 7 })'>
+                    <img src='@Url.Content("~/Content/Images/santa.toilet.seat.cover.and.rug.set.jpg")' alt="Santa toilet seat cover and rug set" class="product-image" />
+                </a>
+            </div>
+            <p class="product-name" style="margin-left: 5px;">Santa toilet seat cover and rug set</p>
+        </div>
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
     </div>
 </div>

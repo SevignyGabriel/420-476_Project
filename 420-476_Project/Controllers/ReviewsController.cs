@@ -10,112 +10,112 @@ using _420_476_Project.Models;
 
 namespace _420_476_Project.Controllers
 {
-    public class UsersController : Controller
+    public class ReviewsController : Controller
     {
         private DatabaseEntities db = new DatabaseEntities();
 
-        // GET: Users
+        // GET: Reviews
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Role);
-            return View(users.ToList());
+            var reviews = db.Reviews.Include(r => r.User);
+            return View(reviews.ToList());
         }
 
-        // GET: Users/Details/5
-        public ActionResult Details(string id)
+        // GET: Reviews/Details/5
+        public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Review review = db.Reviews.Find(id);
+            if (review == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(review);
         }
 
-        // GET: Users/Create
+        // GET: Reviews/Create
         public ActionResult Create()
         {
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName");
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password");
             return View();
         }
 
-        // POST: Users/Create
+        // POST: Reviews/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress,RoleID")] User user)
+        public ActionResult Create([Bind(Include = "ReviewID,Score,Title,Text,UserLogin")] Review review)
         {
             if (ModelState.IsValid)
             {
-                db.Users.Add(user);
+                db.Reviews.Add(review);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password", review.UserLogin);
+            return View(review);
         }
 
-        // GET: Users/Edit/5
-        public ActionResult Edit(string id)
+        // GET: Reviews/Edit/5
+        public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Review review = db.Reviews.Find(id);
+            if (review == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password", review.UserLogin);
+            return View(review);
         }
 
-        // POST: Users/Edit/5
+        // POST: Reviews/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress,RoleID")] User user)
+        public ActionResult Edit([Bind(Include = "ReviewID,Score,Title,Text,UserLogin")] Review review)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(user).State = EntityState.Modified;
+                db.Entry(review).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
-            return View(user);
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password", review.UserLogin);
+            return View(review);
         }
 
-        // GET: Users/Delete/5
-        public ActionResult Delete(string id)
+        // GET: Reviews/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
-            if (user == null)
+            Review review = db.Reviews.Find(id);
+            if (review == null)
             {
                 return HttpNotFound();
             }
-            return View(user);
+            return View(review);
         }
 
-        // POST: Users/Delete/5
+        // POST: Reviews/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        public ActionResult DeleteConfirmed(int id)
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
+            Review review = db.Reviews.Find(id);
+            db.Reviews.Remove(review);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -127,6 +127,12 @@ namespace _420_476_Project.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ReportedList()
+        {
+            var reviews = db.Reviews.Include(r => r.User);
+            return View(reviews.ToList());
         }
     }
 }

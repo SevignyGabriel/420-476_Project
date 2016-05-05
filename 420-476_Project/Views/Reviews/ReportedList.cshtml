@@ -1,7 +1,7 @@
-﻿@model IEnumerable<_420_476_Project.Models.Product>
+﻿@model IEnumerable<_420_476_Project.Models.Review>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ReportedList";
     if (Session["loggedIn"] != null)
     {
         if ((bool)Session["loggedIn"])
@@ -26,21 +26,21 @@
     }
 }
 
-<h2>Index</h2>
+<h2>ReportedList</h2>
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ProductName)
+            @Html.DisplayNameFor(model => model.Score)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UnitPrice)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.UnitsInStock)
+            @Html.DisplayNameFor(model => model.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
+            @Html.DisplayNameFor(model => model.User.Password)
         </th>
         <th></th>
     </tr>
@@ -48,21 +48,20 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ProductName)
+            @Html.DisplayFor(modelItem => item.Score)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UnitPrice)
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.UnitsInStock)
+            @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            @Html.DisplayFor(modelItem => item.User.Password)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
+            @Html.ActionLink("Details", "Details", new { id=item.ReviewID }) <br />
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReviewID })
         </td>
     </tr>
 }

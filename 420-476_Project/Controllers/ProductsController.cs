@@ -17,7 +17,7 @@ namespace _420_476_Project.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Categories);
+            var products = db.Products.Include(p => p.Category);
             return View(products.ToList());
         }
 
@@ -28,12 +28,12 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
-            if (products == null)
+            Product product = db.Products.Find(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(products);
+            return View(product);
         }
 
         // GET: Products/Create
@@ -44,21 +44,21 @@ namespace _420_476_Project.Controllers
         }
 
         // POST: Products/Create
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Products products)
+        public ActionResult Create([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Product product)
         {
             if (ModelState.IsValid)
             {
-                db.Products.Add(products);
+                db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", products.CategoryID);
-            return View(products);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
+            return View(product);
         }
 
         // GET: Products/Edit/5
@@ -68,30 +68,30 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
-            if (products == null)
+            Product product = db.Products.Find(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", products.CategoryID);
-            return View(products);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
+            return View(product);
         }
 
         // POST: Products/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
+        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Products products)
+        public ActionResult Edit([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Product product)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(products).State = EntityState.Modified;
+                db.Entry(product).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", products.CategoryID);
-            return View(products);
+            ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "CategoryName", product.CategoryID);
+            return View(product);
         }
 
         // GET: Products/Delete/5
@@ -101,12 +101,12 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Products products = db.Products.Find(id);
-            if (products == null)
+            Product product = db.Products.Find(id);
+            if (product == null)
             {
                 return HttpNotFound();
             }
-            return View(products);
+            return View(product);
         }
 
         // POST: Products/Delete/5
@@ -114,8 +114,8 @@ namespace _420_476_Project.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Products products = db.Products.Find(id);
-            db.Products.Remove(products);
+            Product product = db.Products.Find(id);
+            db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -127,6 +127,12 @@ namespace _420_476_Project.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult ViewShoppingCart()
+        {
+            var orderDetails = db.OrderDetails.Include(p => p.Product);
+            return View(orderDetails.ToList());
         }
     }
 }

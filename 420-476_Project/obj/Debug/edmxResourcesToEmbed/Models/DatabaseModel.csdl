@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityType Name="Categories">
+  <EntityType Name="Category">
     <Key>
       <PropertyRef Name="CategoryID" />
     </Key>
@@ -8,28 +8,37 @@
     <Property Name="CategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Products" Relationship="Self.FK_Products_Categories" FromRole="Categories" ToRole="Products" />
   </EntityType>
-  <EntityType Name="OrderDetails">
+  <EntityType Name="OrderDetail">
     <Key>
       <PropertyRef Name="OrderDetailsID" />
     </Key>
     <Property Name="OrderDetailsID" Type="Int32" Nullable="false" />
     <Property Name="ProductID" Type="Int32" Nullable="false" />
     <Property Name="Quantity" Type="Int16" Nullable="false" />
-    <NavigationProperty Name="Products" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
+    <NavigationProperty Name="Product" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
     <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_OrderDetails" FromRole="OrderDetails" ToRole="Orders" />
   </EntityType>
-  <EntityType Name="Orders">
+  <EntityType Name="Order">
     <Key>
       <PropertyRef Name="OrderID" />
     </Key>
     <Property Name="OrderID" Type="Int32" Nullable="false" />
-    <Property Name="OrderDetailsID" Type="Int32" />
-    <Property Name="UserID" Type="Int32" />
-    <Property Name="OrderDate" Type="DateTime" Precision="3" />
-    <NavigationProperty Name="OrderDetails" Relationship="Self.FK_Orders_OrderDetails" FromRole="Orders" ToRole="OrderDetails" />
-    <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
+    <Property Name="OrderDetailsID" Type="Int32" Nullable="false" />
+    <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="OrderDetail" Relationship="Self.FK_Orders_OrderDetails" FromRole="Orders" ToRole="OrderDetails" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
   </EntityType>
-  <EntityType Name="Products">
+  <EntityType Name="Picture">
+    <Key>
+      <PropertyRef Name="PictureID" />
+    </Key>
+    <Property Name="PictureID" Type="Int32" Nullable="false" />
+    <Property Name="PictureName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PictureDescription" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Products" Relationship="Self.ProductPictures" FromRole="Pictures" ToRole="Products" />
+  </EntityType>
+  <EntityType Name="Product">
     <Key>
       <PropertyRef Name="ProductID" />
     </Key>
@@ -38,11 +47,12 @@
     <Property Name="UnitPrice" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
     <Property Name="UnitsInStock" Type="Int16" Nullable="false" />
     <Property Name="CategoryID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Categories" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
+    <NavigationProperty Name="Category" Relationship="Self.FK_Products_Categories" FromRole="Products" ToRole="Categories" />
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
+    <NavigationProperty Name="Pictures" Relationship="Self.ProductPictures" FromRole="Products" ToRole="Pictures" />
     <NavigationProperty Name="Tags" Relationship="Self.ProductTags" FromRole="Products" ToRole="Tags" />
   </EntityType>
-  <EntityType Name="Reviews">
+  <EntityType Name="Review">
     <Key>
       <PropertyRef Name="ReviewID" />
     </Key>
@@ -50,10 +60,22 @@
     <Property Name="Score" Type="Byte" Nullable="false" />
     <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-    <Property Name="UserID" Type="Int32" Nullable="false" />
-    <NavigationProperty Name="Users" Relationship="Self.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
+    <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="User" Relationship="Self.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
   </EntityType>
+<<<<<<< HEAD
   <EntityType Name="Tags">
+=======
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.FK_Users_Roles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Tag">
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
     <Key>
       <PropertyRef Name="TagID" />
     </Key>
@@ -61,23 +83,29 @@
     <Property Name="TagName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
     <NavigationProperty Name="Products" Relationship="Self.ProductTags" FromRole="Tags" ToRole="Products" />
   </EntityType>
-  <EntityType Name="Users">
+  <EntityType Name="User">
     <Key>
-      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Login" />
     </Key>
-    <Property Name="UserID" Type="Int32" Nullable="false" />
     <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="ShipAddress" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+<<<<<<< HEAD
     <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
     <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+=======
+    <Property Name="RoleID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Users" FromRole="Users" ToRole="Orders" />
+    <NavigationProperty Name="Reviews" Relationship="Self.FK_Reviews_Users" FromRole="Users" ToRole="Reviews" />
+    <NavigationProperty Name="Role" Relationship="Self.FK_Users_Roles" FromRole="Users" ToRole="Roles" />
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
   </EntityType>
   <Association Name="FK_Products_Categories">
-    <End Role="Categories" Type="Self.Categories" Multiplicity="1" />
-    <End Role="Products" Type="Self.Products" Multiplicity="*" />
+    <End Role="Categories" Type="Self.Category" Multiplicity="1" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Categories">
         <PropertyRef Name="CategoryID" />
@@ -88,8 +116,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_OrderDetails_Products">
-    <End Role="Products" Type="Self.Products" Multiplicity="1" />
-    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <End Role="Products" Type="Self.Product" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Products">
         <PropertyRef Name="ProductID" />
@@ -100,8 +128,8 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Orders_OrderDetails">
-    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="0..1" />
-    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <End Role="OrderDetails" Type="Self.OrderDetail" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="OrderDetails">
         <PropertyRef Name="OrderDetailsID" />
@@ -112,34 +140,54 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Orders_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
-    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Orders" Type="Self.Order" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="Login" />
       </Principal>
       <Dependent Role="Orders">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="UserLogin" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Reviews_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="1" />
-    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <End Role="Users" Type="Self.User" Multiplicity="1" />
+    <End Role="Reviews" Type="Self.Review" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="Login" />
       </Principal>
       <Dependent Role="Reviews">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="UserLogin" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+<<<<<<< HEAD
+=======
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Role" Multiplicity="1" />
+    <End Role="Users" Type="Self.User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ProductPictures">
+    <End Role="Pictures" Type="Self.Picture" Multiplicity="*" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+  </Association>
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
   <Association Name="ProductTags">
-    <End Role="Products" Type="Self.Products" Multiplicity="*" />
-    <End Role="Tags" Type="Self.Tags" Multiplicity="*" />
+    <End Role="Products" Type="Self.Product" Multiplicity="*" />
+    <End Role="Tags" Type="Self.Tag" Multiplicity="*" />
   </Association>
   <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+<<<<<<< HEAD
     <EntitySet Name="Categories" EntityType="Self.Categories" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" />
     <EntitySet Name="Orders" EntityType="Self.Orders" />
@@ -147,6 +195,17 @@
     <EntitySet Name="Reviews" EntityType="Self.Reviews" />
     <EntitySet Name="Tags" EntityType="Self.Tags" />
     <EntitySet Name="Users" EntityType="Self.Users" />
+=======
+    <EntitySet Name="Categories" EntityType="Self.Category" />
+    <EntitySet Name="OrderDetails" EntityType="Self.OrderDetail" />
+    <EntitySet Name="Orders" EntityType="Self.Order" />
+    <EntitySet Name="Pictures" EntityType="Self.Picture" />
+    <EntitySet Name="Products" EntityType="Self.Product" />
+    <EntitySet Name="Reviews" EntityType="Self.Review" />
+    <EntitySet Name="Roles" EntityType="Self.Role" />
+    <EntitySet Name="Tags" EntityType="Self.Tag" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
     <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
@@ -167,6 +226,17 @@
       <End Role="Users" EntitySet="Users" />
       <End Role="Reviews" EntitySet="Reviews" />
     </AssociationSet>
+<<<<<<< HEAD
+=======
+    <AssociationSet Name="FK_Users_Roles" Association="Self.FK_Users_Roles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="ProductPictures" Association="Self.ProductPictures">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="Products" EntitySet="Products" />
+    </AssociationSet>
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
     <AssociationSet Name="ProductTags" Association="Self.ProductTags">
       <End Role="Products" EntitySet="Products" />
       <End Role="Tags" EntitySet="Tags" />

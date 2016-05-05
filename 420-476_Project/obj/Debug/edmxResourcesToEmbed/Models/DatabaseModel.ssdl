@@ -20,9 +20,25 @@
       <PropertyRef Name="OrderID" />
     </Key>
     <Property Name="OrderID" Type="int" Nullable="false" />
-    <Property Name="OrderDetailsID" Type="int" />
-    <Property Name="UserID" Type="int" />
-    <Property Name="OrderDate" Type="datetime" />
+    <Property Name="OrderDetailsID" Type="int" Nullable="false" />
+    <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="OrderDate" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Pictures">
+    <Key>
+      <PropertyRef Name="PictureID" />
+    </Key>
+    <Property Name="PictureID" Type="int" Nullable="false" />
+    <Property Name="PictureName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="PictureDescription" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="ProductPictures">
+    <Key>
+      <PropertyRef Name="ProductID" />
+      <PropertyRef Name="PictureID" />
+    </Key>
+    <Property Name="ProductID" Type="int" Nullable="false" />
+    <Property Name="PictureID" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="Products">
     <Key>
@@ -50,8 +66,18 @@
     <Property Name="Score" Type="tinyint" Nullable="false" />
     <Property Name="Title" Type="varchar" MaxLength="50" />
     <Property Name="Text" Type="varchar(max)" />
-    <Property Name="UserID" Type="int" Nullable="false" />
+    <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+<<<<<<< HEAD
+=======
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="int" Nullable="false" />
+    <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
   <EntityType Name="Tags">
     <Key>
       <PropertyRef Name="TagID" />
@@ -61,15 +87,18 @@
   </EntityType>
   <EntityType Name="Users">
     <Key>
-      <PropertyRef Name="UserID" />
+      <PropertyRef Name="Login" />
     </Key>
-    <Property Name="UserID" Type="int" Nullable="false" />
     <Property Name="Login" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Name" Type="varchar" MaxLength="50" />
     <Property Name="PhoneNumber" Type="varchar" MaxLength="50" />
     <Property Name="ShipAddress" Type="varchar" MaxLength="50" />
+<<<<<<< HEAD
+=======
+    <Property Name="RoleID" Type="int" Nullable="false" />
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
   </EntityType>
   <Association Name="FK_OrderDetails_Products">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
@@ -84,7 +113,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Orders_OrderDetails">
-    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="0..1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="OrderDetails">
@@ -96,14 +125,38 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="FK_Orders_Users">
-    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
     <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="Login" />
       </Principal>
       <Dependent Role="Orders">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="UserLogin" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductPictures_Pictures">
+    <End Role="Pictures" Type="Self.Pictures" Multiplicity="1" />
+    <End Role="ProductPictures" Type="Self.ProductPictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Pictures">
+        <PropertyRef Name="PictureID" />
+      </Principal>
+      <Dependent Role="ProductPictures">
+        <PropertyRef Name="PictureID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProductPictures_Products">
+    <End Role="Products" Type="Self.Products" Multiplicity="1" />
+    <End Role="ProductPictures" Type="Self.ProductPictures" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="ProductPictures">
+        <PropertyRef Name="ProductID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -148,17 +201,34 @@
     <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Users">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="Login" />
       </Principal>
       <Dependent Role="Reviews">
-        <PropertyRef Name="UserID" />
+        <PropertyRef Name="UserLogin" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
+<<<<<<< HEAD
+=======
+  <Association Name="FK_Users_Roles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Roles">
+        <PropertyRef Name="RoleID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="RoleID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+>>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
   <EntityContainer Name="DatabaseModelStoreContainer">
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Pictures" EntityType="Self.Pictures" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProductPictures" EntityType="Self.ProductPictures" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="ProductTags" EntityType="Self.ProductTags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Reviews" EntityType="Self.Reviews" Schema="dbo" store:Type="Tables" />
@@ -175,6 +245,14 @@
     <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
       <End Role="Users" EntitySet="Users" />
       <End Role="Orders" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductPictures_Pictures" Association="Self.FK_ProductPictures_Pictures">
+      <End Role="Pictures" EntitySet="Pictures" />
+      <End Role="ProductPictures" EntitySet="ProductPictures" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProductPictures_Products" Association="Self.FK_ProductPictures_Products">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="ProductPictures" EntitySet="ProductPictures" />
     </AssociationSet>
     <AssociationSet Name="FK_Products_Categories" Association="Self.FK_Products_Categories">
       <End Role="Categories" EntitySet="Categories" />

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
@@ -9,31 +9,23 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
             <div class="navbar-header">
-<<<<<<< HEAD
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-=======
                 <a href="http://itsdoge.com/">
                     <img src='@Url.Content("~/Content/Images/logo.jpg")' alt="Logo" class="navbar-brand logo" />
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
->>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nom de l'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("420-476 Project", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
-            <div class="navbar-collapse collapse">
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-<<<<<<< HEAD
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-=======
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
@@ -63,14 +55,13 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Login", "Login", "Accounts")</li>
-                    <li>@Html.ActionLink("Register", "Create", "Accounts")</li>
+                    <li>@Html.ActionLink("Your Account", "Details", "Accounts")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Accounts")</li>
                     <li>@Html.ActionLink("Shopping Cart", "ViewShoppingCart", "Products")</li>
->>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
                 </ul>
             </div>
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
