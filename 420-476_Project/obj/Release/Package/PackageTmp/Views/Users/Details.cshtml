@@ -1,0 +1,88 @@
+﻿@model _420_476_Project.Models.Users
+
+@{
+    ViewBag.Title = "Details";
+    if (Session["loggedIn"] != null)
+    {
+        if ((bool)Session["loggedIn"])
+        {
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
+            switch (userLoggedIn.RoleID)
+            {
+                case 1:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+                case 2:
+                    Layout = "~/Views/Shared/_Moderator.cshtml";
+                    break;
+                case 3:
+                    Layout = "~/Views/Shared/_Admin.cshtml";
+                    break;
+                default:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+            }
+        }
+    }
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>User</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Password)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Password)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShipAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShipAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Roles.RoleName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Roles.RoleName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Login }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

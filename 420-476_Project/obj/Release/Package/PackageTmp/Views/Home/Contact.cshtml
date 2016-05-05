@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Contact";
+    if (Session["loggedIn"] != null)
+    {
+        if ((bool)Session["loggedIn"])
+        {
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
+            switch (userLoggedIn.RoleID)
+            {
+                case 1:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+                case 2:
+                    Layout = "~/Views/Shared/_Moderator.cshtml";
+                    break;
+                case 3:
+                    Layout = "~/Views/Shared/_Admin.cshtml";
+                    break;
+                default:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+            }
+        }
+    }
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<address>
+    One Microsoft Way<br />
+    Redmond, WA 98052-6399<br />
+    <abbr title="Phone">P:</abbr>
+    425.555.0100
+</address>
+
+<address>
+    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+</address>

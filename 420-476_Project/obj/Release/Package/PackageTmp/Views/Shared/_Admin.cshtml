@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="http://itsdoge.com/">
+                    <img src='@Url.Content("~/Content/Images/logo.jpg")' alt="Logo" class="navbar-brand logo" />
+                </a>
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("420-476 Project", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("View/Edit/Delete products", "Index", "Products")</li>
+                            <li>@Html.ActionLink("View/Edit/Delete users", "Index", "Users")</li>
+                            <li>@Html.ActionLink("Add new product", "Create", "Products")</li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <select class="search-categories-list">
+                            <option>All</option>
+                            <option>Electronic</option>
+                            <option>Home</option>
+                            <option>Music</option>
+                            <option>Clothing</option>
+                            <option>Health &amp; Beauty</option>
+                            <option>SUPER LONG MESSAGE SUPER LONG MESSAGE SUPER LONG MESSAGE</option>
+                        </select>
+                        <input class="form-control search-bar" size="600" placeholder="Search" type="text">
+                        <input type="image" src="~/Content/Images/Magnifying_glass_icon.svg" class="btn btn-search" />
+                    </div>
+                </form>
+                <ul class="nav navbar-nav navbar-right">
+                    <li>@Html.ActionLink("Your Account", "Details", "Accounts")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Accounts")</li>
+                    <li>@Html.ActionLink("Shopping Cart", "ViewShoppingCart", "Products")</li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

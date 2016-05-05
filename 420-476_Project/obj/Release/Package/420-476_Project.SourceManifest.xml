@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<sitemanifest>
+  <IisApp path="D:\Users\1434518\Documents\SourceTree\420-476_Project\420-476_Project\obj\Release\Package\PackageTmp" />
+  <setAcl path="D:\Users\1434518\Documents\SourceTree\420-476_Project\420-476_Project\obj\Release\Package\PackageTmp" setAclResourceType="Directory" />
+  <setAcl path="D:\Users\1434518\Documents\SourceTree\420-476_Project\420-476_Project\obj\Release\Package\PackageTmp" setAclUser="anonymousAuthenticationUser" setAclResourceType="Directory" />
+</sitemanifest>

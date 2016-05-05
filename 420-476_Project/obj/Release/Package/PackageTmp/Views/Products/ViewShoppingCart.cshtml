@@ -1,0 +1,63 @@
+﻿@model IEnumerable<_420_476_Project.Models.OrderDetails>
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    if (Session["loggedIn"] != null)
+    {
+        if ((bool)Session["loggedIn"])
+        {
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
+            switch (userLoggedIn.RoleID)
+            {
+                case 1:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+                case 2:
+                    Layout = "~/Views/Shared/_Moderator.cshtml";
+                    break;
+                case 3:
+                    Layout = "~/Views/Shared/_Admin.cshtml";
+                    break;
+                default:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+            }
+        }
+    }
+}
+
+<h2>Shopping Cart</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Products.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Products.UnitPrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Products.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Products.UnitPrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Quantity)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.OrderDetailsID }) <br />
+            @Html.ActionLink("Delete", "Delete", new { id=item.OrderDetailsID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="65f98524fcc746efaed56e00d08685d5" Name="Diagram1">
+        <EntityTypeShape EntityType="DatabaseModel.Categories" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.OrderDetails" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Orders" Width="1.5" PointX="7.5" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Pictures" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Products" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Reviews" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Roles" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Tags" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Users" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseModel.FK_Products_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_OrderDetails_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Orders_OrderDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Reviews_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.ProductPictures" ManuallyRouted="false" />
+        <AssociationConnector Association="DatabaseModel.ProductTags" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
