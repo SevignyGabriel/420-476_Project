@@ -1,0 +1,16 @@
+﻿<form action="~/Products/Index" class="navbar-form navbar-left" role="search">
+    <div class="form-group">
+        <select class="search-categories-list" name="category">
+            <option>All</option>   
+            @foreach (SelectListItem i in ViewBag.CategoryID)
+            {
+                <option>@i.Text.ToString()</option>
+            }
+        </select>
+        <input class="form-control search-bar" size="600" placeholder="Search" type="text" name="request">
+        <input type="image" src="~/Content/Images/Magnifying_glass_icon.svg" class="btn btn-search" />
+    </div>
+</form>
+
+
+
