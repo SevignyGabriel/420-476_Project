@@ -14,12 +14,14 @@ namespace _420_476_Project.Controllers
     {
         private DatabaseEntities db = new DatabaseEntities();
 
+        [NonAction]
         // GET: Products
         public ActionResult Index()
         {
-            var products = db.Products.Include(p => p.Category);
+            var products = db.Products.Include(p => p.Categories);
             return View(products.ToList());
         }
+
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
@@ -28,12 +30,45 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Products product = db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
             }
             return View(product);
+        }
+
+        public ActionResult Index(String request, String category)
+        {
+
+            var products = db.Products.Where(p => p.CategoryID == 1);
+
+            if (category != "All")
+            {
+                products = db.Products.Where(p => p.ProductName.Contains(request) && p.Categories.CategoryName == category).Include(p => p.Categories);
+            }
+            else
+            {
+                products = db.Products.Where(p => p.ProductName.Contains(request)).Include(p => p.Categories);
+            }
+
+            return View(products.ToList());
+        }
+
+        [ChildActionOnly]
+        public ActionResult RenderSearch()
+        {
+            Create();
+
+            return PartialView("_SearchPartial");
+        }
+
+        [ChildActionOnly]
+        public ActionResult RenderMenu()
+        {
+            Create();
+
+            return PartialView("_MenuPartial");
         }
 
         // GET: Products/Create
@@ -48,7 +83,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Products product)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +103,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Products product = db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -82,7 +117,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,ProductName,UnitPrice,UnitsInStock,CategoryID")] Products product)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +136,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Product product = db.Products.Find(id);
+            Products product = db.Products.Find(id);
             if (product == null)
             {
                 return HttpNotFound();
@@ -114,7 +149,7 @@ namespace _420_476_Project.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Product product = db.Products.Find(id);
+            Products product = db.Products.Find(id);
             db.Products.Remove(product);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -131,7 +166,7 @@ namespace _420_476_Project.Controllers
 
         public ActionResult ViewShoppingCart()
         {
-            var orderDetails = db.OrderDetails.Include(p => p.Product);
+            var orderDetails = db.OrderDetails.Include(p => p.Products);
             return View(orderDetails.ToList());
         }
     }

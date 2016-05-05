@@ -1,4 +1,4 @@
-﻿@model _420_476_Project.Models.User
+﻿@model _420_476_Project.Models.Users
 
 @{
     ViewBag.Title = "Your account";
@@ -6,7 +6,7 @@
     {
         if ((bool)Session["loggedIn"])
         {
-            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.User;
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
             switch (userLoggedIn.RoleID)
             {
                 case 1:
@@ -80,11 +80,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
+            @Html.DisplayNameFor(model => model.Roles.RoleName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Role.RoleName)
+            @Html.DisplayFor(model => model.Roles.RoleName)
         </dd>
 
     </dl>

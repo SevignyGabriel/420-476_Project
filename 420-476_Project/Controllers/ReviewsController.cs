@@ -17,7 +17,7 @@ namespace _420_476_Project.Controllers
         // GET: Reviews
         public ActionResult Index()
         {
-            var reviews = db.Reviews.Include(r => r.User);
+            var reviews = db.Reviews.Include(r => r.Users);
             return View(reviews.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
+            Reviews review = db.Reviews.Find(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -48,7 +48,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ReviewID,Score,Title,Text,UserLogin")] Review review)
+        public ActionResult Create([Bind(Include = "ReviewID,Score,Title,Text,UserLogin")] Reviews review)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
+            Reviews review = db.Reviews.Find(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -82,7 +82,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ReviewID,Score,Title,Text,UserLogin")] Review review)
+        public ActionResult Edit([Bind(Include = "ReviewID,Score,Title,Text,UserLogin")] Reviews review)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Review review = db.Reviews.Find(id);
+            Reviews review = db.Reviews.Find(id);
             if (review == null)
             {
                 return HttpNotFound();
@@ -114,7 +114,7 @@ namespace _420_476_Project.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Review review = db.Reviews.Find(id);
+            Reviews review = db.Reviews.Find(id);
             db.Reviews.Remove(review);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -131,7 +131,7 @@ namespace _420_476_Project.Controllers
 
         public ActionResult ReportedList()
         {
-            var reviews = db.Reviews.Include(r => r.User);
+            var reviews = db.Reviews.Include(r => r.Users);
             return View(reviews.ToList());
         }
     }

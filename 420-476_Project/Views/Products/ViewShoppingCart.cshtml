@@ -1,4 +1,4 @@
-﻿@model IEnumerable<_420_476_Project.Models.OrderDetail>
+﻿@model IEnumerable<_420_476_Project.Models.OrderDetails>
 
 @{
     ViewBag.Title = "Shopping Cart";
@@ -6,7 +6,7 @@
     {
         if ((bool)Session["loggedIn"])
         {
-            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.User;
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
             switch (userLoggedIn.RoleID)
             {
                 case 1:
@@ -31,10 +31,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Product.ProductName)
+            @Html.DisplayNameFor(model => model.Products.ProductName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Product.UnitPrice)
+            @Html.DisplayNameFor(model => model.Products.UnitPrice)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Quantity)
@@ -45,10 +45,10 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Product.ProductName)
+            @Html.DisplayFor(modelItem => item.Products.ProductName)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Product.UnitPrice)
+            @Html.DisplayFor(modelItem => item.Products.UnitPrice)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Quantity)

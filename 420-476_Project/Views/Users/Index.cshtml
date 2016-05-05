@@ -1,4 +1,4 @@
-﻿@model IEnumerable<_420_476_Project.Models.User>
+﻿@model IEnumerable<_420_476_Project.Models.Users>
 
 @{
     ViewBag.Title = "Index";
@@ -6,7 +6,7 @@
     {
         if ((bool)Session["loggedIn"])
         {
-            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.User;
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
             switch (userLoggedIn.RoleID)
             {
                 case 1:
@@ -49,7 +49,7 @@
             @Html.DisplayNameFor(model => model.ShipAddress)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
+            @Html.DisplayNameFor(model => model.Roles.RoleName)
         </th>
         <th></th>
     </tr>
@@ -72,7 +72,7 @@
             @Html.DisplayFor(modelItem => item.ShipAddress)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Role.RoleName)
+            @Html.DisplayFor(modelItem => item.Roles.RoleName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Login }) |

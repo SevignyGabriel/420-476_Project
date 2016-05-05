@@ -10,63 +10,30 @@
 </head>
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
+        <div class="container-fluid">
             <div class="navbar-header">
-<<<<<<< HEAD
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-=======
+                
                 <a href="http://itsdoge.com/">
-                    <img src='@Url.Content("~/Content/Images/logo.jpg")' alt="Logo" class="navbar-brand logo" />
+                    <img src="~/Content/Images/logo.jpg" alt="Logo" class="navbar-brand logo" />
                 </a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
->>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Nom de l'application", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("420-476 Project", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-<<<<<<< HEAD
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-=======
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("All", "Index", "Products")</li>
-                            <li class="divider"></li>
-                            <li>@Html.ActionLink("Electronic", "Index", "Products", new { category = "Electronic" })</li>
-                            <li>@Html.ActionLink("Home", "Index", "Products", new { category = "Home" })</li>
-                            <li>@Html.ActionLink("Music", "Index", "Products", new { category = "Music" })</li>
-                            <li>@Html.ActionLink("Clothing", "Index", "Products", new { category = "Clothing" })</li>
-                            <li>@Html.ActionLink("Health & Beauty", "Index", "Products", new { category = "Health & Beauty" })</li>
-                        </ul>
-                    </li>
-                </ul>
-                <form class="navbar-form navbar-left" role="search">
-                    <div class="form-group">
-                        <select class="search-categories-list">
-                            <option>All</option>
-                            <option>Electronic</option>
-                            <option>Home</option>
-                            <option>Music</option>
-                            <option>Clothing</option>
-                            <option>Health &amp; Beauty</option>
-                            <option>SUPER LONG MESSAGE SUPER LONG MESSAGE SUPER LONG MESSAGE</option>
-                        </select>
-                        <input class="form-control search-bar" size="600" placeholder="Search" type="text">
-                        <input type="image" src="~/Content/Images/Magnifying_glass_icon.svg" class="btn btn-search" />
-                    </div>
-                </form>
+                
+                @Html.Action("RenderMenu", "Products")
+
+                @Html.Action("RenderSearch", "Products")
+
                 <ul class="nav navbar-nav navbar-right">
                     <li>@Html.ActionLink("Login", "Login", "Accounts")</li>
                     <li>@Html.ActionLink("Register", "Create", "Accounts")</li>
                     <li>@Html.ActionLink("Shopping Cart", "ViewShoppingCart", "Products")</li>
->>>>>>> e45b6c2a65c623d2e6b454f28c20b61626c1dc2a
                 </ul>
             </div>
         </div>

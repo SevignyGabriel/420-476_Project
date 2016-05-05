@@ -16,7 +16,7 @@ namespace _420_476_Project.Controllers
         // GET: Login
         public ActionResult Details()
         {
-            var userLoggedIn = Session["UserLoggedIn"] as User;
+            var userLoggedIn = Session["UserLoggedIn"] as Users;
             return View(userLoggedIn);
         }
 
@@ -28,7 +28,7 @@ namespace _420_476_Project.Controllers
 
         // Verify the login and password entered by the user
         [HttpPost]
-        public ActionResult Login(User user, string remember)
+        public ActionResult Login(Users user, string remember)
         {
             if (user.Login != null && user.Password != null)
             {
@@ -92,7 +92,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress")] User user)
+        public ActionResult Create([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress")] Users user)
         {
             if (ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            Users user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -131,11 +131,11 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress")] User user)
+        public ActionResult Edit([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress")] Users user)
         {
             if (ModelState.IsValid)
             {
-                var userLoggedIn = Session["UserLoggedIn"] as User;
+                var userLoggedIn = Session["UserLoggedIn"] as Users;
                 if (!user.Password.Equals(userLoggedIn.Password))
                 {
                     byte[] data = System.Text.Encoding.ASCII.GetBytes(user.Password);
@@ -146,7 +146,7 @@ namespace _420_476_Project.Controllers
                 user.RoleID = userLoggedIn.RoleID;
                 db.Entry(user).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details");
             }
             ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
             return View(user);

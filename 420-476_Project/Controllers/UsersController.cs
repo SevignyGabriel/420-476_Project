@@ -17,7 +17,7 @@ namespace _420_476_Project.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            var users = db.Users.Include(u => u.Role);
+            var users = db.Users.Include(u => u.Roles);
             return View(users.ToList());
         }
 
@@ -28,7 +28,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            Users user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -48,7 +48,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress,RoleID")] User user)
+        public ActionResult Create([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress,RoleID")] Users user)
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +68,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            Users user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -82,7 +82,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress,RoleID")] User user)
+        public ActionResult Edit([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress,RoleID")] Users user)
         {
             if (ModelState.IsValid)
             {
@@ -101,7 +101,7 @@ namespace _420_476_Project.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            User user = db.Users.Find(id);
+            Users user = db.Users.Find(id);
             if (user == null)
             {
                 return HttpNotFound();
@@ -114,7 +114,7 @@ namespace _420_476_Project.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(string id)
         {
-            User user = db.Users.Find(id);
+            Users user = db.Users.Find(id);
             db.Users.Remove(user);
             db.SaveChanges();
             return RedirectToAction("Index");

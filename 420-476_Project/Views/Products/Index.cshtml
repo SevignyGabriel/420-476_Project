@@ -1,4 +1,4 @@
-﻿@model IEnumerable<_420_476_Project.Models.Product>
+﻿@model IEnumerable<_420_476_Project.Models.Products>
 
 @{
     ViewBag.Title = "Index";
@@ -6,7 +6,7 @@
     {
         if ((bool)Session["loggedIn"])
         {
-            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.User;
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
             switch (userLoggedIn.RoleID)
             {
                 case 1:
@@ -40,7 +40,7 @@
             @Html.DisplayNameFor(model => model.UnitsInStock)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category.CategoryName)
+            @Html.DisplayNameFor(model => model.Categories.CategoryName)
         </th>
         <th></th>
     </tr>
@@ -57,7 +57,7 @@
             @Html.DisplayFor(modelItem => item.UnitsInStock)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Category.CategoryName)
+            @Html.DisplayFor(modelItem => item.Categories.CategoryName)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
