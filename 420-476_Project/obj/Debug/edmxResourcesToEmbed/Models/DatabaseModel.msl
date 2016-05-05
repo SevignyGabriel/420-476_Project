@@ -67,14 +67,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="DatabaseModel.Roles">
-        <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Tags">
       <EntityTypeMapping TypeName="DatabaseModel.Tag">
         <MappingFragment StoreEntitySet="Tags">
@@ -86,10 +78,6 @@
     <EntitySetMapping Name="Users">
       <EntityTypeMapping TypeName="DatabaseModel.User">
         <MappingFragment StoreEntitySet="Users">
-<<<<<<< HEAD
-=======
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
->>>>>>> 94f964d11917d2987eec057ac32fb6082d2c9e24
           <ScalarProperty Name="Login" ColumnName="Login" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Email" ColumnName="Email" />
