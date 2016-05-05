@@ -1,14 +1,36 @@
-﻿@model _420_476_Project.Models.Products
+﻿@model _420_476_Project.Models.Product
 
 @{
     ViewBag.Title = "Delete";
+    if (Session["loggedIn"] != null)
+    {
+        if ((bool)Session["loggedIn"])
+        {
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.User;
+            switch (userLoggedIn.RoleID)
+            {
+                case 1:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+                case 2:
+                    Layout = "~/Views/Shared/_Moderator.cshtml";
+                    break;
+                case 3:
+                    Layout = "~/Views/Shared/_Admin.cshtml";
+                    break;
+                default:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+            }
+        }
+    }
 }
 
 <h2>Delete</h2>
 
 <h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Products</h4>
+    <h4>Product</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -36,11 +58,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Categories.CategoryName)
+            @Html.DisplayNameFor(model => model.Category.CategoryName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Categories.CategoryName)
+            @Html.DisplayFor(model => model.Category.CategoryName)
         </dd>
 
     </dl>

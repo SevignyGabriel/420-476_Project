@@ -2,7 +2,7 @@
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
   <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
     <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="DatabaseModel.Categories">
+      <EntityTypeMapping TypeName="DatabaseModel.Category">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -10,7 +10,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OrderDetails">
-      <EntityTypeMapping TypeName="DatabaseModel.OrderDetails">
+      <EntityTypeMapping TypeName="DatabaseModel.OrderDetail">
         <MappingFragment StoreEntitySet="OrderDetails">
           <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -19,17 +19,26 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="DatabaseModel.Orders">
+      <EntityTypeMapping TypeName="DatabaseModel.Order">
         <MappingFragment StoreEntitySet="Orders">
           <ScalarProperty Name="OrderID" ColumnName="OrderID" />
           <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Pictures">
+      <EntityTypeMapping TypeName="DatabaseModel.Picture">
+        <MappingFragment StoreEntitySet="Pictures">
+          <ScalarProperty Name="PictureID" ColumnName="PictureID" />
+          <ScalarProperty Name="PictureName" ColumnName="PictureName" />
+          <ScalarProperty Name="PictureDescription" ColumnName="PictureDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="Products">
-      <EntityTypeMapping TypeName="DatabaseModel.Products">
+      <EntityTypeMapping TypeName="DatabaseModel.Product">
         <MappingFragment StoreEntitySet="Products">
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
@@ -40,18 +49,26 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Reviews">
-      <EntityTypeMapping TypeName="DatabaseModel.Reviews">
+      <EntityTypeMapping TypeName="DatabaseModel.Review">
         <MappingFragment StoreEntitySet="Reviews">
           <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
           <ScalarProperty Name="Score" ColumnName="Score" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Text" ColumnName="Text" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="DatabaseModel.Role">
+        <MappingFragment StoreEntitySet="Roles">
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Tags">
-      <EntityTypeMapping TypeName="DatabaseModel.Tags">
+      <EntityTypeMapping TypeName="DatabaseModel.Tag">
         <MappingFragment StoreEntitySet="Tags">
           <ScalarProperty Name="TagID" ColumnName="TagID" />
           <ScalarProperty Name="TagName" ColumnName="TagName" />
@@ -59,19 +76,26 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="DatabaseModel.Users">
+      <EntityTypeMapping TypeName="DatabaseModel.User">
         <MappingFragment StoreEntitySet="Users">
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-          <ScalarProperty Name="UserID" ColumnName="UserID" />
           <ScalarProperty Name="Login" ColumnName="Login" />
           <ScalarProperty Name="Password" ColumnName="Password" />
           <ScalarProperty Name="Email" ColumnName="Email" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
           <ScalarProperty Name="ShipAddress" ColumnName="ShipAddress" />
+          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="ProductPictures" TypeName="DatabaseModel.ProductPictures" StoreEntitySet="ProductPictures">
+      <EndProperty Name="Pictures">
+        <ScalarProperty Name="PictureID" ColumnName="PictureID" />
+      </EndProperty>
+      <EndProperty Name="Products">
+        <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+      </EndProperty>
+    </AssociationSetMapping>
     <AssociationSetMapping Name="ProductTags" TypeName="DatabaseModel.ProductTags" StoreEntitySet="ProductTags">
       <EndProperty Name="Products">
         <ScalarProperty Name="ProductID" ColumnName="ProductID" />
@@ -80,13 +104,5 @@
         <ScalarProperty Name="TagID" ColumnName="TagID" />
       </EndProperty>
     </AssociationSetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="DatabaseModel.Roles">
-        <MappingFragment StoreEntitySet="Roles">
-          <ScalarProperty Name="RoleName" ColumnName="RoleName" />
-          <ScalarProperty Name="RoleID" ColumnName="RoleID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<_420_476_Project.Models.User>
+﻿@model IEnumerable<_420_476_Project.Models.Review>
 
 @{
     ViewBag.Title = "Index";
@@ -28,28 +28,19 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Password)
+            @Html.DisplayNameFor(model => model.Score)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Email)
+            @Html.DisplayNameFor(model => model.Title)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            @Html.DisplayNameFor(model => model.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.ShipAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Role.RoleName)
+            @Html.DisplayNameFor(model => model.User.Password)
         </th>
         <th></th>
     </tr>
@@ -57,27 +48,21 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Password)
+            @Html.DisplayFor(modelItem => item.Score)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Email)
+            @Html.DisplayFor(modelItem => item.Title)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Name)
+            @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PhoneNumber)
+            @Html.DisplayFor(modelItem => item.User.Password)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.ShipAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Role.RoleName)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Login }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Login }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Login })
+            @Html.ActionLink("Edit", "Edit", new { id=item.ReviewID }) <br />
+            @Html.ActionLink("Details", "Details", new { id=item.ReviewID }) <br />
+            @Html.ActionLink("Delete", "Delete", new { id=item.ReviewID })
         </td>
     </tr>
 }

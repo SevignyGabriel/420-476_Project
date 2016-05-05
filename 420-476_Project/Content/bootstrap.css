@@ -4407,11 +4407,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     border-bottom-right-radius: 4px;
 }
   .search-bar {
-      max-width: 575px;
+      max-width: 540px;
       border-radius: 0;
   }
   .search-categories-list {
-      max-width: 130px;
+      max-width: 115px;
       float: left;
       height: 38px;
       border: 0;

@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
@@ -27,15 +27,10 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("All", "Index", "Products")</li>
-                            <li class="divider"></li>
-                            <li>@Html.ActionLink("Electronic", "Index", "Products", new { category = "Electronic" })</li>
-                            <li>@Html.ActionLink("Home", "Index", "Products", new { category = "Home" })</li>
-                            <li>@Html.ActionLink("Music", "Index", "Products", new { category = "Music" })</li>
-                            <li>@Html.ActionLink("Clothing", "Index", "Products", new { category = "Clothing" })</li>
-                            <li>@Html.ActionLink("Health & Beauty", "Index", "Products", new { category = "Health & Beauty" })</li>
+                            <li>@Html.ActionLink("View/Edit/Delete reviews", "Index", "Reviews")</li>
+                            <li>@Html.ActionLink("View/Edit/Delete reported reviews", "ReportedList", "Reviews")</li>
                         </ul>
                     </li>
                 </ul>
@@ -55,8 +50,8 @@
                     </div>
                 </form>
                 <ul class="nav navbar-nav navbar-right">
-                    <li>@Html.ActionLink("Login", "Login", "Accounts")</li>
-                    <li>@Html.ActionLink("Register", "Create", "Accounts")</li>
+                    <li>@Html.ActionLink("Your Account", "Details", "Accounts")</li>
+                    <li>@Html.ActionLink("Logout", "Logout", "Accounts")</li>
                     <li>@Html.ActionLink("Shopping Cart", "ViewShoppingCart", "Products")</li>
                 </ul>
             </div>
