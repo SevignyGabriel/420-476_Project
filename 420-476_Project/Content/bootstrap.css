@@ -4410,11 +4410,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     background-color: rgb(255,160,0);
 }
   .search-bar {
-      max-width: 575px;
+      max-width: 540px;
       border-radius: 0;
   }
   .search-categories-list {
-      max-width: 130px;
+      max-width: 115px;
       float: left;
       height: 38px;
       border: 0;
@@ -4447,6 +4447,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
       }
       .search-categories-list {
           max-width: 70px;
+          min-width: 40px;
           float: left;
           height: 38px;
           border: 0;

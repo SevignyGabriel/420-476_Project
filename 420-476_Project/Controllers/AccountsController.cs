@@ -92,7 +92,7 @@ namespace _420_476_Project.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Login,Password,Email,Name,PhoneNumber,ShipAddress")] Users user)
+        public ActionResult Create([Bind(Include = "Login,Password,Email")] Users user)
         {
             if (ModelState.IsValid)
             {

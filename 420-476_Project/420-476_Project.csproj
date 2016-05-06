@@ -218,7 +218,6 @@
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
     <None Include="Properties\PublishProfiles\420-476-Project-final.pubxml" />
-    <None Include="Properties\PublishProfiles\420-476-Project.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
