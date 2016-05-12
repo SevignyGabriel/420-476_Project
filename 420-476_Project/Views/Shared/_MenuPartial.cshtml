@@ -3,17 +3,17 @@
         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Categories <span class="caret"></span></a>
         <ul class="dropdown-menu" role="menu">
 
-            <li><a href="/Products/Index?category=All&request=">All</a></li>
+            <li><a href="/Products/Index?category=All&request=&pageNumber=1">All</a></li>
 
             @foreach (SelectListItem i in ViewBag.CategoryID)
             {
                 if (i.Text.Contains("&"))
                 {
-                    <li><a href="/Products/Index?category=@i.Text.Replace(" & ", "+%26+")&request=">@i.Text</a></li>
+                    <li><a href="/Products/Index?category=@i.Text.Replace(" & ", "+%26+")&request=&pageNumber=1">@i.Text</a></li>
                 }
                 else
                 {
-                    <li><a href="/Products/Index?category=@i.Text&request=">@i.Text</a></li>
+                    <li><a href="/Products/Index?category=@i.Text&request=&pageNumber=1">@i.Text</a></li>
                 }
             }
 

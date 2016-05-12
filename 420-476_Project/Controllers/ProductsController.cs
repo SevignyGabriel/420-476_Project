@@ -38,21 +38,34 @@ namespace _420_476_Project.Controllers
             return View(product);
         }
 
-        public ActionResult Index(String request, String category)
+        public ActionResult Index(String request, String category, int pageNumber)
         {
-
             var products = db.Products.Where(p => p.CategoryID == 1);
 
             if (category != "All")
-            {
                 products = db.Products.Where(p => p.ProductName.Contains(request) && p.Categories.CategoryName == category).Include(p => p.Categories);
-            }
             else
-            {
                 products = db.Products.Where(p => p.ProductName.Contains(request)).Include(p => p.Categories);
-            }
 
-            return View(products.ToList());
+            ViewBag.category = category;
+            ViewBag.request = request;
+            return View(createProductsList(pageNumber, products.ToList()));
+        }
+
+        public List<Products> createProductsList(int pageNumber, List<Products> products)
+        {
+            List<Products> limited = new List<Products>();
+            int productNumber = 0;
+            foreach (var p in products)
+            {
+                productNumber++;
+                if (productNumber <= (pageNumber * 2) && productNumber > ((pageNumber - 1) * 2))
+                {
+                    limited.Add(p);
+                }
+            }
+            ViewBag.productNumber = (int)(productNumber / 2) + 1;
+            return limited;
         }
 
         [ChildActionOnly]

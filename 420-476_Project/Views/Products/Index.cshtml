@@ -68,3 +68,10 @@
 }
 
 </table>
+
+<div>
+    @for (int i = 1; i < @ViewBag.productNumber+1; i++)
+    {
+        <a href="/Products/Index?category=@ViewBag.category&request=@ViewBag.request&pageNumber=@i">@i</a>
+    }
+</div>
