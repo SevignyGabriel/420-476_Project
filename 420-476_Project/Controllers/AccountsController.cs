@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using _420_476_Project.Models;
 using System.Net;
 using System.Data.Entity;
+using System.Web.Mail;
+using System.Net.Mail;
 
 namespace _420_476_Project.Controllers
 {
@@ -87,6 +89,32 @@ namespace _420_476_Project.Controllers
             return View();
         }
 
+        public void SendMail(string email)
+        {
+            System.Net.Mail.MailMessage mail = new System.Net.Mail.MailMessage();
+
+            mail.From = new MailAddress("jesseck9@hotmail.com");
+            mail.To.Add(email);
+            mail.Subject = "Iscription à doge sales";
+            mail.Body = "Votre iscription est un succès";
+
+            mail.IsBodyHtml = true;
+
+            SmtpClient smtp = new SmtpClient();
+            smtp.Host = "smtp-relay.sendinblue.com";
+            smtp.Port = 587;
+
+            smtp.UseDefaultCredentials = false;
+            smtp.Credentials = new System.Net.NetworkCredential("jesseck9@hotmail.com", "vaMBkO0R1DVKZhnG");
+
+
+            smtp.EnableSsl = false;
+            smtp.Send(mail);
+
+            mail.Dispose();
+            smtp.Dispose();
+        }
+
         // POST: Accounts/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -96,6 +124,8 @@ namespace _420_476_Project.Controllers
         {
             if (ModelState.IsValid)
             {
+                //dont work, git gud
+               //SendMail(user.Email);
                 user.RoleID = 1;
                 byte[] data = System.Text.Encoding.ASCII.GetBytes(user.Password);
                 data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
