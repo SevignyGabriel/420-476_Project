@@ -31,6 +31,9 @@
 <table class="table">
     <tr>
         <th>
+            @Html.DisplayNameFor(model => model.Pictures)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.ProductName)
         </th>
         <th>
@@ -42,11 +45,24 @@
         <th>
             @Html.DisplayNameFor(model => model.Categories.CategoryName)
         </th>
+        <td>
+            @Html.DisplayNameFor(model => model.Tags)
+        </td>
         <th></th>
     </tr>
 
 @foreach (var item in Model) {
     <tr>
+        <td>
+        @if (@item.Pictures.FirstOrDefault() == null)
+        {
+            <img src="~/Content/Images/No_image_available.svg" alt="Product image" width="130" />
+        }
+        else
+        {
+            <img src="~/Content/Images/@item.Pictures.FirstOrDefault().PictureName" alt="@item.Pictures.FirstOrDefault().PictureDescription" width="200" />
+        }
+        </td>
         <td>
             @Html.DisplayFor(modelItem => item.ProductName)
         </td>
@@ -60,8 +76,21 @@
             @Html.DisplayFor(modelItem => item.Categories.CategoryName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
+            @for (int i = 0; i < item.Tags.Count; i++)
+            {
+                if (i == 0)
+                {
+                    <span>@item.Tags.ElementAt(i).TagName</span>
+                }
+                else
+                {
+                    <span>, @item.Tags.ElementAt(i).TagName</span>
+                }
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) <br />
+            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) <br />
             @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
         </td>
     </tr>
