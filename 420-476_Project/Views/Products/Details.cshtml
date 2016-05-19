@@ -102,16 +102,6 @@
 
     </dl>
 </div>
-<p>
-    @Html.Label("Quantity: ")
-    <select class="quantity-list" name="quantity">
-        @for (int i = 1; i <= Model.UnitsInStock; i++)
-        {
-            <option>@i</option>
-        }
-    </select> <br />
-    <button class="btn-buy">Add to Cart</button>
-</p>
 
 @section scripts{
     <script type="text/javascript">

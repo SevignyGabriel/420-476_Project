@@ -7052,3 +7052,34 @@ button.close {
 .panel-primary .panel-title {
   color: #fff;
 }
+.btn-buy {
+  background: #ffc800;
+  background-image: -webkit-linear-gradient(top, #ffc800, #d99536);
+  background-image: -moz-linear-gradient(top, #ffc800, #d99536);
+  background-image: -ms-linear-gradient(top, #ffc800, #d99536);
+  background-image: -o-linear-gradient(top, #ffc800, #d99536);
+  background-image: linear-gradient(to bottom, #ffc800, #d99536);
+  -webkit-border-radius: 6;
+  -moz-border-radius: 6;
+  border-radius: 6px;
+  text-shadow: 1px 1px 3px #666666;
+  color: #000000;
+  font-size: 17px;
+  padding: 7px 14px 7px 14px;
+  border: solid #c9910e 1px;
+  text-decoration: none;
+}
+.btn-buy:hover {
+  background: #ffb300;
+  background-image: -webkit-linear-gradient(top, #ffb300, #d98536);
+  background-image: -moz-linear-gradient(top, #ffb300, #d98536);
+  background-image: -ms-linear-gradient(top, #ffb300, #d98536);
+  background-image: -o-linear-gradient(top, #ffb300, #d98536);
+  background-image: linear-gradient(to bottom, #ffb300, #d98536);
+  text-decoration: none;
+}
+.quantity-list {
+      max-width: 115px;
+      height: 38px;
+      border: 0;
+  }

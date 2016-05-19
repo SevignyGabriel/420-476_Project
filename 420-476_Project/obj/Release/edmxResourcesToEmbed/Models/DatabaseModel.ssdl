@@ -1,14 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <!--Erreurs détectées durant la génération :
-avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-476_Project.dbo.420-476_Project_Products' ; en outre, aucune clé primaire valide n'a pu être déduite. Cette table/vue a été exclue. Pour utiliser l'entité, vous devez passer en revue votre schéma, ajouter les clés appropriées et supprimer le commentaire associé.
-        <EntityType Name="420-476_Project_Products">
-          <Property Name="ProductID" Type="varchar" MaxLength="50" />
-          <Property Name="ProductName" Type="varchar" MaxLength="50" />
-          <Property Name="UnitPrice" Type="varchar" MaxLength="50" />
-          <Property Name="UnitsInStock" Type="varchar" MaxLength="50" />
-          <Property Name="CategoryID" Type="varchar" MaxLength="50" />
-        </EntityType>-->
+<Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityType Name="Categories">
     <Key>
       <PropertyRef Name="CategoryID" />
@@ -21,6 +12,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
       <PropertyRef Name="OrderDetailsID" />
     </Key>
     <Property Name="OrderDetailsID" Type="int" Nullable="false" />
+    <Property Name="OrderID" Type="int" Nullable="false" />
     <Property Name="ProductID" Type="int" Nullable="false" />
     <Property Name="Quantity" Type="smallint" Nullable="false" />
   </EntityType>
@@ -29,7 +21,6 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
       <PropertyRef Name="OrderID" />
     </Key>
     <Property Name="OrderID" Type="int" Nullable="false" />
-    <Property Name="OrderDetailsID" Type="int" Nullable="false" />
     <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="OrderDate" Type="datetime" Nullable="false" />
   </EntityType>
@@ -76,6 +67,8 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
     <Property Name="Title" Type="varchar" MaxLength="50" />
     <Property Name="Text" Type="varchar(max)" />
     <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="Reports" Type="int" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -103,6 +96,30 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
     <Property Name="ShipAddress" Type="varchar" MaxLength="50" />
     <Property Name="RoleID" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK__Reviews__Product__628FA481">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_OrderDetails_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_OrderDetails_Products">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -112,18 +129,6 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
       </Principal>
       <Dependent Role="OrderDetails">
         <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Orders_OrderDetails">
-    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="OrderDetails">
-        <PropertyRef Name="OrderDetailsID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="OrderDetailsID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -223,7 +228,8 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityContainer Name="DatabaseModelStoreContainer">
+  <Function Name="Top_5_Most_Popular_Products" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <EntityContainer Name="ProjectModelStoreContainer">
     <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -235,13 +241,17 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
     <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__Reviews__Product__628FA481" Association="Self.FK__Reviews__Product__628FA481">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
       <End Role="Products" EntitySet="Products" />
       <End Role="OrderDetails" EntitySet="OrderDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Orders_OrderDetails" Association="Self.FK_Orders_OrderDetails">
-      <End Role="OrderDetails" EntitySet="OrderDetails" />
-      <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
       <End Role="Users" EntitySet="Users" />

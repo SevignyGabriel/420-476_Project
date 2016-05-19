@@ -359,18 +359,21 @@ namespace _420_476_Project.Controllers
             List<Products> products = new List<Products>();
             CartViewModel cartModel = new CartViewModel();
 
-            if (Session["cart"] != null || Session["cart"].ToString() != "")
+            if (Session["cart"] != null)
             {
-                // Split string on ','. This will separate all the numbers in a string
-                productsID = Session["cart"].ToString().Split(',');
-                for (int i = 1; i <= (productsID.Count() - 2); i++)
+                if (Session["cart"].ToString() != "")
                 {
-                    products.Add(db.Products.Find(Int32.Parse(productsID[i].ToString())));
-                }
+                    // Split string on ','. This will separate all the numbers in a string
+                    productsID = Session["cart"].ToString().Split(',');
+                    for (int i = 1; i <= (productsID.Count() - 2); i++)
+                    {
+                        products.Add(db.Products.Find(Int32.Parse(productsID[i].ToString())));
+                    }
 
-                //foreach(var p in productsID) {
-                //     products.Add(db.Products.Find(Int32.Parse(p)));
-                //}
+                    //foreach(var p in productsID) {
+                    //     products.Add(db.Products.Find(Int32.Parse(p)));
+                    //}
+                }
             }
             cartModel.products = products;
 

@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+  <EntityContainerMapping StorageEntityContainer="ProjectModelStoreContainer" CdmEntityContainer="DatabaseEntities">
     <EntitySetMapping Name="Categories">
-      <EntityTypeMapping TypeName="DatabaseModel.Categories">
+      <EntityTypeMapping TypeName="ProjectModel.Categories">
         <MappingFragment StoreEntitySet="Categories">
           <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
           <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -10,26 +10,26 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="OrderDetails">
-      <EntityTypeMapping TypeName="DatabaseModel.OrderDetails">
+      <EntityTypeMapping TypeName="ProjectModel.OrderDetails">
         <MappingFragment StoreEntitySet="OrderDetails">
           <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
+          <ScalarProperty Name="OrderID" ColumnName="OrderID" />
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="Quantity" ColumnName="Quantity" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Orders">
-      <EntityTypeMapping TypeName="DatabaseModel.Orders">
+      <EntityTypeMapping TypeName="ProjectModel.Orders">
         <MappingFragment StoreEntitySet="Orders">
           <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-          <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
           <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
           <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Pictures">
-      <EntityTypeMapping TypeName="DatabaseModel.Pictures">
+      <EntityTypeMapping TypeName="ProjectModel.Pictures">
         <MappingFragment StoreEntitySet="Pictures">
           <ScalarProperty Name="PictureID" ColumnName="PictureID" />
           <ScalarProperty Name="PictureName" ColumnName="PictureName" />
@@ -38,7 +38,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Products">
-      <EntityTypeMapping TypeName="DatabaseModel.Products">
+      <EntityTypeMapping TypeName="ProjectModel.Products">
         <MappingFragment StoreEntitySet="Products">
           <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="ProductName" ColumnName="ProductName" />
@@ -49,8 +49,10 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Reviews">
-      <EntityTypeMapping TypeName="DatabaseModel.Reviews">
+      <EntityTypeMapping TypeName="ProjectModel.Reviews">
         <MappingFragment StoreEntitySet="Reviews">
+          <ScalarProperty Name="Reports" ColumnName="Reports" />
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
           <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
           <ScalarProperty Name="Score" ColumnName="Score" />
           <ScalarProperty Name="Title" ColumnName="Title" />
@@ -60,7 +62,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="DatabaseModel.Roles">
+      <EntityTypeMapping TypeName="ProjectModel.Roles">
         <MappingFragment StoreEntitySet="Roles">
           <ScalarProperty Name="RoleID" ColumnName="RoleID" />
           <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -68,7 +70,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Tags">
-      <EntityTypeMapping TypeName="DatabaseModel.Tags">
+      <EntityTypeMapping TypeName="ProjectModel.Tags">
         <MappingFragment StoreEntitySet="Tags">
           <ScalarProperty Name="TagID" ColumnName="TagID" />
           <ScalarProperty Name="TagName" ColumnName="TagName" />
@@ -76,7 +78,7 @@
       </EntityTypeMapping>
     </EntitySetMapping>
     <EntitySetMapping Name="Users">
-      <EntityTypeMapping TypeName="DatabaseModel.Users">
+      <EntityTypeMapping TypeName="ProjectModel.Users">
         <MappingFragment StoreEntitySet="Users">
           <ScalarProperty Name="Login" ColumnName="Login" />
           <ScalarProperty Name="Password" ColumnName="Password" />
@@ -88,7 +90,7 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="ProductPictures" TypeName="DatabaseModel.ProductPictures" StoreEntitySet="ProductPictures">
+    <AssociationSetMapping Name="ProductPictures" TypeName="ProjectModel.ProductPictures" StoreEntitySet="ProductPictures">
       <EndProperty Name="Pictures">
         <ScalarProperty Name="PictureID" ColumnName="PictureID" />
       </EndProperty>
@@ -96,7 +98,7 @@
         <ScalarProperty Name="ProductID" ColumnName="ProductID" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="ProductTags" TypeName="DatabaseModel.ProductTags" StoreEntitySet="ProductTags">
+    <AssociationSetMapping Name="ProductTags" TypeName="ProjectModel.ProductTags" StoreEntitySet="ProductTags">
       <EndProperty Name="Products">
         <ScalarProperty Name="ProductID" ColumnName="ProductID" />
       </EndProperty>
@@ -104,5 +106,13 @@
         <ScalarProperty Name="TagID" ColumnName="TagID" />
       </EndProperty>
     </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="Top_5_Most_Popular_Products" FunctionName="ProjectModel.Store.Top_5_Most_Popular_Products">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="ProjectModel.Top_5_Most_Popular_Products_Result">
+          <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+          <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
   </EntityContainerMapping>
 </Mapping>
