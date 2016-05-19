@@ -262,6 +262,7 @@ G:\SourceTree\420-476_Project\420-476_Project\bin\Newtonsoft.Json.xml
 G:\SourceTree\420-476_Project\420-476_Project\obj\Debug\420-476_Project.csprojResolveAssemblyReference.cache
 G:\SourceTree\420-476_Project\420-476_Project\obj\Debug\420-476_Project.dll
 G:\SourceTree\420-476_Project\420-476_Project\obj\Debug\420-476_Project.pdb
+<<<<<<< HEAD
 C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\roslyn\csc.exe.config
 C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\roslyn\csc.rsp
 C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\roslyn\csi.exe
@@ -285,3 +286,14 @@ C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\fr\System.Web.Razor
 C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.resources.dll
 C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.Deployment.resources.dll
 C:\Users\jesse\Documents\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.Razor.resources.dll
+=======
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\EntityFramework.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\EntityFramework.SqlServer.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Helpers.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Mvc.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Optimization.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Razor.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.Deployment.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.Razor.resources.dll
+>>>>>>> 114cc1bfbb7ef564c81fd575b1fe09ea34f1a94e

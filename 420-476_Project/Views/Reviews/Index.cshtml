@@ -40,7 +40,13 @@
             @Html.DisplayNameFor(model => model.Text)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Users.Password)
+            @Html.DisplayNameFor(model => model.Users.Login)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Products.ProductName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Reports)
         </th>
         <th></th>
     </tr>
@@ -57,7 +63,13 @@
             @Html.DisplayFor(modelItem => item.Text)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Users.Password)
+            @Html.DisplayFor(modelItem => item.Users.Login)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Products.ProductName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Reports)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.ReviewID }) <br />

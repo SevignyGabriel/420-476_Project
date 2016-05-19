@@ -27,12 +27,12 @@
         }
     }
 }
-
 <h2>Details</h2>
 
 <div>
     <h4>Product</h4>
     <hr />
+<<<<<<< HEAD
 
     @{ 
         if (Session["cart"] != null)
@@ -51,6 +51,26 @@
             <input type="image" src="~/Content/Images/Add.to.cart.icon2.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("addToCart", "Products", new { id = Model.ProductID})'" />
         }
     }
+=======
+    <div>
+        @if (Model.Pictures.FirstOrDefault() == null)
+            {
+            <img src="~/Content/Images/No_image_available.svg" alt="Product image" width="130" />
+        }
+        else
+        {
+            <img id="main" src="~/Content/Images/@Model.Pictures.FirstOrDefault().PictureName" alt="@Model.Pictures.FirstOrDefault().PictureDescription" width="250" />
+            <div id="galery">
+                @foreach (var item in Model.Pictures)
+                {
+                    <a onclick="swap(this); return false;" href="~/Content/Images/@item.PictureName">
+                        <img src="~/Content/Images/@item.PictureName" alt="@item.PictureDescription" width="80" />
+                    </a>
+                }
+            </div>
+        }
+    </div>
+>>>>>>> 114cc1bfbb7ef564c81fd575b1fe09ea34f1a94e
 
     <dl class="dl-horizontal">
         <dt>
@@ -88,6 +108,40 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.Label("Quantity: ")
+    <select class="quantity-list" name="quantity">
+        @for (int i = 1; i <= Model.UnitsInStock; i++)
+        {
+            <option>@i</option>
+        }
+    </select> <br />
+    <button class="btn-buy">Add to Cart</button>
 </p>
+
+@section scripts{
+    <script type="text/javascript">
+        function swap(image) {
+            document.getElementById("main").src = image.href;
+        }
+        $(document).ready(function () {
+        })
+    </script>
+}
+
+<div>
+    <strong>@Html.DisplayNameFor(model => model.Reviews)</strong>
+    <br />
+    @foreach (var review in Model.Reviews)
+    {
+        <div style="background-color: lightgray; border: 2px solid black; width: 600px; padding: 5px;">
+            <p><strong>@review.Title</strong></p>
+            <p><strong>Score:</strong> @review.Score&#9733;</p>
+            <p>@review.Text</p>
+            <p><strong>Review by:</strong> @review.UserLogin</p>
+            @Html.ActionLink("Report", "Report", "Reviews", new { reviewId = review.ReviewID, productId = Model.ProductID }, null)
+        </div>
+        <br />
+    }
+</div>
+
+@Html.ActionLink("Add review", "Add", "Reviews", new { productId = Model.ProductID }, null)

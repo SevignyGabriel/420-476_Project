@@ -7,7 +7,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using _420_476_Project.Models;
+<<<<<<< HEAD
 using _420_476_Project.ViewModels;
+=======
+using System.Web.Services;
+>>>>>>> 114cc1bfbb7ef564c81fd575b1fe09ea34f1a94e
 
 namespace _420_476_Project.Controllers
 {
@@ -96,7 +100,99 @@ namespace _420_476_Project.Controllers
             {
                 return HttpNotFound();
             }
+            writeCookie(id);
             return View(product);
+        }
+
+        public void writeCookie(int? id)
+        {
+            bool exist = false;
+            if (Request.Cookies["RecentlyViewed"]["Item1"] != "")
+            {
+                if (Request.Cookies["RecentlyViewed"]["Item1"] == Convert.ToString(id))
+                {
+                    exist = true;
+                }
+            }
+            if (Request.Cookies["RecentlyViewed"]["Item2"] != "")
+            {
+                if (Request.Cookies["RecentlyViewed"]["Item2"] == Convert.ToString(id))
+                {
+                    exist = true;
+                }
+            }
+            if (Request.Cookies["RecentlyViewed"]["Item3"] != "")
+            {
+                if (Request.Cookies["RecentlyViewed"]["Item3"] == Convert.ToString(id))
+                {
+                    exist = true;
+                }
+            }
+            if (Request.Cookies["RecentlyViewed"]["Item4"] != "")
+            {
+                if (Request.Cookies["RecentlyViewed"]["Item4"] == Convert.ToString(id))
+                {
+                    exist = true;
+                }
+            }
+            if (Request.Cookies["RecentlyViewed"]["Item5"] != "")
+            {
+                if (Request.Cookies["RecentlyViewed"]["Item5"] == Convert.ToString(id))
+                {
+                    exist = true;
+                }
+            }
+            if (!exist)
+            {
+                switch (Request.Cookies["RecentlyViewed"]["AssignTo"])
+                {
+                    case "1":
+                        Response.Cookies["RecentlyViewed"]["Item1"] = Convert.ToString(id);
+                        Response.Cookies["RecentlyViewed"]["Item2"] = Request.Cookies["RecentlyViewed"]["Item2"];
+                        Response.Cookies["RecentlyViewed"]["Item3"] = Request.Cookies["RecentlyViewed"]["Item3"];
+                        Response.Cookies["RecentlyViewed"]["Item4"] = Request.Cookies["RecentlyViewed"]["Item4"];
+                        Response.Cookies["RecentlyViewed"]["Item5"] = Request.Cookies["RecentlyViewed"]["Item5"];
+                        break;
+                    case "2":
+                        Response.Cookies["RecentlyViewed"]["Item2"] = Convert.ToString(id);
+                        Response.Cookies["RecentlyViewed"]["Item1"] = Request.Cookies["RecentlyViewed"]["Item1"];
+                        Response.Cookies["RecentlyViewed"]["Item3"] = Request.Cookies["RecentlyViewed"]["Item3"];
+                        Response.Cookies["RecentlyViewed"]["Item4"] = Request.Cookies["RecentlyViewed"]["Item4"];
+                        Response.Cookies["RecentlyViewed"]["Item5"] = Request.Cookies["RecentlyViewed"]["Item5"];
+                        break;
+                    case "3":
+                        Response.Cookies["RecentlyViewed"]["Item3"] = Convert.ToString(id);
+                        Response.Cookies["RecentlyViewed"]["Item1"] = Request.Cookies["RecentlyViewed"]["Item1"];
+                        Response.Cookies["RecentlyViewed"]["Item2"] = Request.Cookies["RecentlyViewed"]["Item2"];
+                        Response.Cookies["RecentlyViewed"]["Item4"] = Request.Cookies["RecentlyViewed"]["Item4"];
+                        Response.Cookies["RecentlyViewed"]["Item5"] = Request.Cookies["RecentlyViewed"]["Item5"];
+                        break;
+                    case "4":
+                        Response.Cookies["RecentlyViewed"]["Item4"] = Convert.ToString(id);
+                        Response.Cookies["RecentlyViewed"]["Item1"] = Request.Cookies["RecentlyViewed"]["Item1"];
+                        Response.Cookies["RecentlyViewed"]["Item2"] = Request.Cookies["RecentlyViewed"]["Item2"];
+                        Response.Cookies["RecentlyViewed"]["Item3"] = Request.Cookies["RecentlyViewed"]["Item3"];
+                        Response.Cookies["RecentlyViewed"]["Item5"] = Request.Cookies["RecentlyViewed"]["Item5"];
+                        break;
+                    case "5":
+                        Response.Cookies["RecentlyViewed"]["Item5"] = Convert.ToString(id);
+                        Response.Cookies["RecentlyViewed"]["Item1"] = Request.Cookies["RecentlyViewed"]["Item1"];
+                        Response.Cookies["RecentlyViewed"]["Item2"] = Request.Cookies["RecentlyViewed"]["Item2"];
+                        Response.Cookies["RecentlyViewed"]["Item3"] = Request.Cookies["RecentlyViewed"]["Item3"];
+                        Response.Cookies["RecentlyViewed"]["Item4"] = Request.Cookies["RecentlyViewed"]["Item4"];
+                        break;
+                    default:
+                        break;
+                }
+                if (Convert.ToInt32(Request.Cookies["RecentlyViewed"]["AssignTo"]) >= 5)
+                {
+                    Response.Cookies["RecentlyViewed"]["AssignTo"] = "1";
+                }
+                else
+                {
+                    Response.Cookies["RecentlyViewed"]["AssignTo"] = Convert.ToString(Convert.ToInt32(Request.Cookies["RecentlyViewed"]["AssignTo"]) + 1);
+                }
+            }
         }
 
         public ActionResult Index(String request, String category, int pageNumber)
@@ -297,6 +393,7 @@ namespace _420_476_Project.Controllers
             return View(cartModel);
         }
 
+<<<<<<< HEAD
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult ViewShoppingCart(string quantity)
@@ -330,5 +427,21 @@ namespace _420_476_Project.Controllers
         //    ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
         //    return View();
         //}
+=======
+        public ActionResult GetProductsNames()
+        {
+            string term = Request.QueryString["term"].ToLower();
+            var result = from p in db.Products
+                         where p.ProductName.ToLower().Contains(term)
+                         select p.ProductName;
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SimpleList()
+        {
+            var products = db.Products.Include(p => p.Categories);
+            return View(products.ToList());
+        }
+>>>>>>> 114cc1bfbb7ef564c81fd575b1fe09ea34f1a94e
     }
 }

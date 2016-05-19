@@ -39,7 +39,7 @@ namespace _420_476_Project.Controllers
         // GET: Reviews/Create
         public ActionResult Create()
         {
-            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password");
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Login");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace _420_476_Project.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password", review.UserLogin);
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Login", review.UserLogin);
             return View(review);
         }
 
@@ -73,7 +73,7 @@ namespace _420_476_Project.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password", review.UserLogin);
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Login", review.UserLogin);
             return View(review);
         }
 
@@ -90,7 +90,7 @@ namespace _420_476_Project.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Password", review.UserLogin);
+            ViewBag.UserLogin = new SelectList(db.Users, "Login", "Login", review.UserLogin);
             return View(review);
         }
 
@@ -131,8 +131,60 @@ namespace _420_476_Project.Controllers
 
         public ActionResult ReportedList()
         {
-            var reviews = db.Reviews.Include(r => r.Users);
+            var reviews = db.Reviews.Where(r => r.Reports != null && r.Reports > 0).OrderByDescending(r => r.Reports);
             return View(reviews.ToList());
+        }
+
+        public ActionResult Add(int productId)
+        {
+            if (AccountsController.isLoggedIn())
+            {
+                return View();
+            }
+            return RedirectToAction("Login", "Accounts");
+        }
+
+        [HttpPost]
+        public ActionResult Add([Bind(Include = "Score,Title,Text")] Reviews review, int productId)
+        {
+            if (ModelState.IsValid && review.Score <= 10 && review.Score >= 0)
+            {
+                var userLoggedIn = Session["UserLoggedIn"] as Users;
+                review.UserLogin = userLoggedIn.Login;
+                var id = db.Reviews.Count() + 1;
+                review.ProductID = productId;
+                review.ReviewID = id;
+                db.Reviews.Add(review);
+                db.SaveChanges();
+                return RedirectToAction("Details", "Products", new { id = productId });
+            }
+            else
+                TempData["Error"] = "Your review is invalid";
+
+            return View();
+        }
+
+        public ActionResult Report(int reviewId, int productId)
+        {
+            var review = db.Reviews.Find(reviewId);
+            if (review.Reports == null)
+            {
+                review.Reports = 1;
+            }
+            else
+                review.Reports += 1;
+            db.Entry(review).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Details", "Products", new { id = productId });
+        }
+
+        public ActionResult ResetReports(int reviewId)
+        {
+            var review = db.Reviews.Find(reviewId);
+            review.Reports = 0;
+            db.Entry(review).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("ReportedList");
         }
     }
 }

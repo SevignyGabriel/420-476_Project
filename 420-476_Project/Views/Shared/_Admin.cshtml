@@ -6,7 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Mon application ASP.NET</title>
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
 </head>
 <body>
     <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -29,7 +32,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Options <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li>@Html.ActionLink("View/Edit/Delete products", "Index", "Products")</li>
+                            <li>@Html.ActionLink("View/Edit/Delete products", "SimpleList", "Products")</li>
                             <li>@Html.ActionLink("View/Edit/Delete users", "Index", "Users")</li>
                             <li>@Html.ActionLink("Add new product", "Create", "Products")</li>
                         </ul>
@@ -52,8 +55,6 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
