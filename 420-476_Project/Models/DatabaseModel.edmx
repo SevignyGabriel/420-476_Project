@@ -4,16 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="DatabaseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Erreurs détectées durant la génération :
-avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-476_Project.dbo.420-476_Project_Products' ; en outre, aucune clé primaire valide n'a pu être déduite. Cette table/vue a été exclue. Pour utiliser l'entité, vous devez passer en revue votre schéma, ajouter les clés appropriées et supprimer le commentaire associé.
-        <EntityType Name="420-476_Project_Products">
-          <Property Name="ProductID" Type="varchar" MaxLength="50" />
-          <Property Name="ProductName" Type="varchar" MaxLength="50" />
-          <Property Name="UnitPrice" Type="varchar" MaxLength="50" />
-          <Property Name="UnitsInStock" Type="varchar" MaxLength="50" />
-          <Property Name="CategoryID" Type="varchar" MaxLength="50" />
-        </EntityType>-->
+    <Schema Namespace="ProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012.Azure" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -26,6 +17,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             <PropertyRef Name="OrderDetailsID" />
           </Key>
           <Property Name="OrderDetailsID" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="smallint" Nullable="false" />
         </EntityType>
@@ -34,7 +26,6 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             <PropertyRef Name="OrderID" />
           </Key>
           <Property Name="OrderID" Type="int" Nullable="false" />
-          <Property Name="OrderDetailsID" Type="int" Nullable="false" />
           <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OrderDate" Type="datetime" Nullable="false" />
         </EntityType>
@@ -81,6 +72,8 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
           <Property Name="Title" Type="varchar" MaxLength="50" />
           <Property Name="Text" Type="varchar(max)" />
           <Property Name="UserLogin" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="Reports" Type="int" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -108,6 +101,30 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
           <Property Name="ShipAddress" Type="varchar" MaxLength="50" />
           <Property Name="RoleID" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK__Reviews__Product__628FA481">
+          <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+          <End Role="Reviews" Type="Self.Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetails_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -117,18 +134,6 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </Principal>
             <Dependent Role="OrderDetails">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_OrderDetails">
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderDetails">
-              <PropertyRef Name="OrderDetailsID" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="OrderDetailsID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -228,7 +233,8 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="DatabaseModelStoreContainer">
+        <Function Name="Top_5_Most_Popular_Products" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="ProjectModelStoreContainer">
           <EntitySet Name="Categories" EntityType="Self.Categories" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderDetails" EntityType="Self.OrderDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
@@ -240,13 +246,17 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
           <EntitySet Name="Roles" EntityType="Self.Roles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Tags" EntityType="Self.Tags" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Reviews__Product__628FA481" Association="Self.FK__Reviews__Product__628FA481">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_OrderDetails" Association="Self.FK_Orders_OrderDetails">
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
             <End Role="Users" EntitySet="Users" />
@@ -281,11 +291,10 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="Categories">
           <Key>
             <PropertyRef Name="CategoryID" />
@@ -299,20 +308,20 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             <PropertyRef Name="OrderDetailsID" />
           </Key>
           <Property Name="OrderDetailsID" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
           <Property Name="ProductID" Type="Int32" Nullable="false" />
           <Property Name="Quantity" Type="Int16" Nullable="false" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
           <NavigationProperty Name="Products" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_OrderDetails" FromRole="OrderDetails" ToRole="Orders" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
             <PropertyRef Name="OrderID" />
           </Key>
           <Property Name="OrderID" Type="Int32" Nullable="false" />
-          <Property Name="OrderDetailsID" Type="Int32" Nullable="false" />
           <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_Orders_OrderDetails" FromRole="Orders" ToRole="OrderDetails" />
+          <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
         </EntityType>
         <EntityType Name="Pictures">
@@ -337,6 +346,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
           <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
           <NavigationProperty Name="Pictures" Relationship="Self.ProductPictures" FromRole="Products" ToRole="Pictures" />
           <NavigationProperty Name="Tags" Relationship="Self.ProductTags" FromRole="Products" ToRole="Tags" />
+          <NavigationProperty Name="Reviews" Relationship="ProjectModel.FK__Reviews__Product__628FA481" FromRole="Products" ToRole="Reviews" />
         </EntityType>
         <EntityType Name="Reviews">
           <Key>
@@ -348,6 +358,9 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Users" Relationship="Self.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
+          <Property Name="ProductID" Type="Int32" />
+          <NavigationProperty Name="Products" Relationship="ProjectModel.FK__Reviews__Product__628FA481" FromRole="Reviews" ToRole="Products" />
+          <Property Name="Reports" Type="Int32" />
         </EntityType>
         <EntityType Name="Roles">
           <Key>
@@ -392,6 +405,18 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_OrderDetails_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderDetails">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderDetails_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -401,18 +426,6 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </Principal>
             <Dependent Role="OrderDetails">
               <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Orders_OrderDetails">
-          <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="1" />
-          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="OrderDetails">
-              <PropertyRef Name="OrderDetailsID" />
-            </Principal>
-            <Dependent Role="Orders">
-              <PropertyRef Name="OrderDetailsID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -474,13 +487,13 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Products" EntitySet="Products" />
           </AssociationSet>
+          <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderDetails" EntitySet="OrderDetails" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderDetails" EntitySet="OrderDetails" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Orders_OrderDetails" Association="Self.FK_Orders_OrderDetails">
-            <End Role="OrderDetails" EntitySet="OrderDetails" />
-            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
             <End Role="Users" EntitySet="Users" />
@@ -502,15 +515,36 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             <End Role="Products" EntitySet="Products" />
             <End Role="Tags" EntitySet="Tags" />
           </AssociationSet>
+          <FunctionImport Name="Top_5_Most_Popular_Products" ReturnType="Collection(ProjectModel.Top_5_Most_Popular_Products_Result)" />
+          <AssociationSet Name="FK__Reviews__Product__628FA481" Association="ProjectModel.FK__Reviews__Product__628FA481">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Reviews" EntitySet="Reviews" />
+          </AssociationSet>
         </EntityContainer>
+        <ComplexType Name="Top_5_Most_Popular_Products_Result">
+          <Property Type="Int32" Name="ProductID" Nullable="false" />
+          <Property Type="Int32" Name="TotalQuantity" Nullable="true" />
+        </ComplexType>
+        <Association Name="FK__Reviews__Product__628FA481">
+          <End Type="ProjectModel.Products" Role="Products" Multiplicity="0..1" />
+          <End Type="ProjectModel.Reviews" Role="Reviews" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Reviews">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+        <EntityContainerMapping StorageEntityContainer="ProjectModelStoreContainer" CdmEntityContainer="DatabaseEntities">
           <EntitySetMapping Name="Categories">
-            <EntityTypeMapping TypeName="DatabaseModel.Categories">
+            <EntityTypeMapping TypeName="ProjectModel.Categories">
               <MappingFragment StoreEntitySet="Categories">
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
@@ -518,26 +552,26 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="OrderDetails">
-            <EntityTypeMapping TypeName="DatabaseModel.OrderDetails">
+            <EntityTypeMapping TypeName="ProjectModel.OrderDetails">
               <MappingFragment StoreEntitySet="OrderDetails">
                 <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="DatabaseModel.Orders">
+            <EntityTypeMapping TypeName="ProjectModel.Orders">
               <MappingFragment StoreEntitySet="Orders">
                 <ScalarProperty Name="OrderID" ColumnName="OrderID" />
-                <ScalarProperty Name="OrderDetailsID" ColumnName="OrderDetailsID" />
                 <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
                 <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Pictures">
-            <EntityTypeMapping TypeName="DatabaseModel.Pictures">
+            <EntityTypeMapping TypeName="ProjectModel.Pictures">
               <MappingFragment StoreEntitySet="Pictures">
                 <ScalarProperty Name="PictureID" ColumnName="PictureID" />
                 <ScalarProperty Name="PictureName" ColumnName="PictureName" />
@@ -546,7 +580,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="DatabaseModel.Products">
+            <EntityTypeMapping TypeName="ProjectModel.Products">
               <MappingFragment StoreEntitySet="Products">
                 <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
@@ -557,8 +591,10 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Reviews">
-            <EntityTypeMapping TypeName="DatabaseModel.Reviews">
+            <EntityTypeMapping TypeName="ProjectModel.Reviews">
               <MappingFragment StoreEntitySet="Reviews">
+                <ScalarProperty Name="Reports" ColumnName="Reports" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
                 <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
                 <ScalarProperty Name="Score" ColumnName="Score" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
@@ -568,7 +604,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="DatabaseModel.Roles">
+            <EntityTypeMapping TypeName="ProjectModel.Roles">
               <MappingFragment StoreEntitySet="Roles">
                 <ScalarProperty Name="RoleID" ColumnName="RoleID" />
                 <ScalarProperty Name="RoleName" ColumnName="RoleName" />
@@ -576,7 +612,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Tags">
-            <EntityTypeMapping TypeName="DatabaseModel.Tags">
+            <EntityTypeMapping TypeName="ProjectModel.Tags">
               <MappingFragment StoreEntitySet="Tags">
                 <ScalarProperty Name="TagID" ColumnName="TagID" />
                 <ScalarProperty Name="TagName" ColumnName="TagName" />
@@ -584,7 +620,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
-            <EntityTypeMapping TypeName="DatabaseModel.Users">
+            <EntityTypeMapping TypeName="ProjectModel.Users">
               <MappingFragment StoreEntitySet="Users">
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
@@ -596,7 +632,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <AssociationSetMapping Name="ProductPictures" TypeName="DatabaseModel.ProductPictures" StoreEntitySet="ProductPictures">
+          <AssociationSetMapping Name="ProductPictures" TypeName="ProjectModel.ProductPictures" StoreEntitySet="ProductPictures">
             <EndProperty Name="Pictures">
               <ScalarProperty Name="PictureID" ColumnName="PictureID" />
             </EndProperty>
@@ -604,7 +640,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
               <ScalarProperty Name="ProductID" ColumnName="ProductID" />
             </EndProperty>
           </AssociationSetMapping>
-          <AssociationSetMapping Name="ProductTags" TypeName="DatabaseModel.ProductTags" StoreEntitySet="ProductTags">
+          <AssociationSetMapping Name="ProductTags" TypeName="ProjectModel.ProductTags" StoreEntitySet="ProductTags">
             <EndProperty Name="Products">
               <ScalarProperty Name="ProductID" ColumnName="ProductID" />
             </EndProperty>
@@ -612,6 +648,14 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
               <ScalarProperty Name="TagID" ColumnName="TagID" />
             </EndProperty>
           </AssociationSetMapping>
+          <FunctionImportMapping FunctionImportName="Top_5_Most_Popular_Products" FunctionName="ProjectModel.Store.Top_5_Most_Popular_Products">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ProjectModel.Top_5_Most_Popular_Products_Result">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="TotalQuantity" ColumnName="TotalQuantity" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -629,7 +673,7 @@ avertissement 6013: Aucune clé primaire n'est définie pour la table/vue '420-4
         <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
-        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->

@@ -262,3 +262,12 @@ G:\SourceTree\420-476_Project\420-476_Project\bin\Newtonsoft.Json.xml
 G:\SourceTree\420-476_Project\420-476_Project\obj\Debug\420-476_Project.csprojResolveAssemblyReference.cache
 G:\SourceTree\420-476_Project\420-476_Project\obj\Debug\420-476_Project.dll
 G:\SourceTree\420-476_Project\420-476_Project\obj\Debug\420-476_Project.pdb
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\EntityFramework.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\EntityFramework.SqlServer.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Helpers.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Mvc.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Optimization.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.Razor.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.Deployment.resources.dll
+C:\Users\Gabri\Documents\SourceTree\420-476_Project\420-476_Project\bin\fr\System.Web.WebPages.Razor.resources.dll

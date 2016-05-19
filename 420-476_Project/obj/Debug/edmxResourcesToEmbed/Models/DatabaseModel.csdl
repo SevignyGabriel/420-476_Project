@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+<Schema Namespace="ProjectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
   <EntityType Name="Categories">
     <Key>
       <PropertyRef Name="CategoryID" />
@@ -13,20 +13,20 @@
       <PropertyRef Name="OrderDetailsID" />
     </Key>
     <Property Name="OrderDetailsID" Type="Int32" Nullable="false" />
+    <Property Name="OrderID" Type="Int32" Nullable="false" />
     <Property Name="ProductID" Type="Int32" Nullable="false" />
     <Property Name="Quantity" Type="Int16" Nullable="false" />
+    <NavigationProperty Name="Orders" Relationship="Self.FK_OrderDetails_Orders" FromRole="OrderDetails" ToRole="Orders" />
     <NavigationProperty Name="Products" Relationship="Self.FK_OrderDetails_Products" FromRole="OrderDetails" ToRole="Products" />
-    <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_OrderDetails" FromRole="OrderDetails" ToRole="Orders" />
   </EntityType>
   <EntityType Name="Orders">
     <Key>
       <PropertyRef Name="OrderID" />
     </Key>
     <Property Name="OrderID" Type="Int32" Nullable="false" />
-    <Property Name="OrderDetailsID" Type="Int32" Nullable="false" />
     <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="OrderDetails" Relationship="Self.FK_Orders_OrderDetails" FromRole="Orders" ToRole="OrderDetails" />
+    <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Orders" FromRole="Orders" ToRole="OrderDetails" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Orders_Users" FromRole="Orders" ToRole="Users" />
   </EntityType>
   <EntityType Name="Pictures">
@@ -51,6 +51,7 @@
     <NavigationProperty Name="OrderDetails" Relationship="Self.FK_OrderDetails_Products" FromRole="Products" ToRole="OrderDetails" />
     <NavigationProperty Name="Pictures" Relationship="Self.ProductPictures" FromRole="Products" ToRole="Pictures" />
     <NavigationProperty Name="Tags" Relationship="Self.ProductTags" FromRole="Products" ToRole="Tags" />
+    <NavigationProperty Name="Reviews" Relationship="ProjectModel.FK__Reviews__Product__628FA481" FromRole="Products" ToRole="Reviews" />
   </EntityType>
   <EntityType Name="Reviews">
     <Key>
@@ -62,6 +63,9 @@
     <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="UserLogin" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="Users" Relationship="Self.FK_Reviews_Users" FromRole="Reviews" ToRole="Users" />
+    <Property Name="ProductID" Type="Int32" />
+    <NavigationProperty Name="Products" Relationship="ProjectModel.FK__Reviews__Product__628FA481" FromRole="Reviews" ToRole="Products" />
+    <Property Name="Reports" Type="Int32" />
   </EntityType>
   <EntityType Name="Roles">
     <Key>
@@ -106,6 +110,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_OrderDetails_Orders">
+    <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Orders">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="OrderDetails">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_OrderDetails_Products">
     <End Role="Products" Type="Self.Products" Multiplicity="1" />
     <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="*" />
@@ -115,18 +131,6 @@
       </Principal>
       <Dependent Role="OrderDetails">
         <PropertyRef Name="ProductID" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Orders_OrderDetails">
-    <End Role="OrderDetails" Type="Self.OrderDetails" Multiplicity="1" />
-    <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="OrderDetails">
-        <PropertyRef Name="OrderDetailsID" />
-      </Principal>
-      <Dependent Role="Orders">
-        <PropertyRef Name="OrderDetailsID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -188,13 +192,13 @@
       <End Role="Categories" EntitySet="Categories" />
       <End Role="Products" EntitySet="Products" />
     </AssociationSet>
+    <AssociationSet Name="FK_OrderDetails_Orders" Association="Self.FK_OrderDetails_Orders">
+      <End Role="Orders" EntitySet="Orders" />
+      <End Role="OrderDetails" EntitySet="OrderDetails" />
+    </AssociationSet>
     <AssociationSet Name="FK_OrderDetails_Products" Association="Self.FK_OrderDetails_Products">
       <End Role="Products" EntitySet="Products" />
       <End Role="OrderDetails" EntitySet="OrderDetails" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Orders_OrderDetails" Association="Self.FK_Orders_OrderDetails">
-      <End Role="OrderDetails" EntitySet="OrderDetails" />
-      <End Role="Orders" EntitySet="Orders" />
     </AssociationSet>
     <AssociationSet Name="FK_Orders_Users" Association="Self.FK_Orders_Users">
       <End Role="Users" EntitySet="Users" />
@@ -216,5 +220,26 @@
       <End Role="Products" EntitySet="Products" />
       <End Role="Tags" EntitySet="Tags" />
     </AssociationSet>
+    <FunctionImport Name="Top_5_Most_Popular_Products" ReturnType="Collection(ProjectModel.Top_5_Most_Popular_Products_Result)" />
+    <AssociationSet Name="FK__Reviews__Product__628FA481" Association="ProjectModel.FK__Reviews__Product__628FA481">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="Reviews" EntitySet="Reviews" />
+    </AssociationSet>
   </EntityContainer>
+  <ComplexType Name="Top_5_Most_Popular_Products_Result">
+    <Property Type="Int32" Name="ProductID" Nullable="false" />
+    <Property Type="Int32" Name="TotalQuantity" Nullable="true" />
+  </ComplexType>
+  <Association Name="FK__Reviews__Product__628FA481">
+    <End Type="ProjectModel.Products" Role="Products" Multiplicity="0..1" />
+    <End Type="ProjectModel.Reviews" Role="Reviews" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="Reviews">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

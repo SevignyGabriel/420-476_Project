@@ -4,24 +4,25 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="5dd8c3a9d6204fb1857dff9497148982" Name="Diagram1">
-        <EntityTypeShape EntityType="DatabaseModel.Categories" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.OrderDetails" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Orders" Width="1.5" PointX="7.5" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Pictures" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Products" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Reviews" Width="1.5" PointX="7.5" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Roles" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Tags" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="DatabaseModel.Users" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
-        <AssociationConnector Association="DatabaseModel.FK_Products_Categories" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_OrderDetails_Products" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Orders_OrderDetails" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Orders_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Reviews_Users" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.FK_Users_Roles" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.ProductPictures" ManuallyRouted="false" />
-        <AssociationConnector Association="DatabaseModel.ProductTags" ManuallyRouted="false" />
+      <Diagram DiagramId="092a0527acd34f3c91819952bb702cab" Name="Diagram1">
+        <EntityTypeShape EntityType="ProjectModel.Categories" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.OrderDetails" Width="1.5" PointX="5.25" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Orders" Width="1.5" PointX="3" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Pictures" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Products" Width="1.5" PointX="3" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Reviews" Width="1.5" PointX="3" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Roles" Width="1.5" PointX="1.5" PointY="12.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Tags" Width="1.5" PointX="5.25" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ProjectModel.Users" Width="1.5" PointX="0.75" PointY="8.125" IsExpanded="true" />
+        <AssociationConnector Association="ProjectModel.FK_Products_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_OrderDetails_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_OrderDetails_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_Orders_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_Reviews_Users" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK_Users_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.ProductPictures" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.ProductTags" ManuallyRouted="false" />
+        <AssociationConnector Association="ProjectModel.FK__Reviews__Product__628FA481" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
