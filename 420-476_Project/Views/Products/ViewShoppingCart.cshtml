@@ -1,33 +1,33 @@
 ﻿@using _420_476_Project.ViewModels;
-@model CartViewModel 
+@model CartViewModel
 
-    @{
-        ViewBag.Title = "Shopping Cart";
-        if (Session["loggedIn"] != null)
+@{
+    ViewBag.Title = "Shopping Cart";
+    if (Session["loggedIn"] != null)
+    {
+        if ((bool)Session["loggedIn"])
         {
-            if ((bool)Session["loggedIn"])
+            var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
+            switch (userLoggedIn.RoleID)
             {
-                var userLoggedIn = Session["userLoggedIn"] as _420_476_Project.Models.Users;
-                switch (userLoggedIn.RoleID)
-                {
-                    case 1:
-                        Layout = "~/Views/Shared/_LoggedIn.cshtml";
-                        break;
-                    case 2:
-                        Layout = "~/Views/Shared/_Moderator.cshtml";
-                        break;
-                    case 3:
-                        Layout = "~/Views/Shared/_Admin.cshtml";
-                        break;
-                    default:
-                        Layout = "~/Views/Shared/_LoggedIn.cshtml";
-                        break;
-                }
+                case 1:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
+                case 2:
+                    Layout = "~/Views/Shared/_Moderator.cshtml";
+                    break;
+                case 3:
+                    Layout = "~/Views/Shared/_Admin.cshtml";
+                    break;
+                default:
+                    Layout = "~/Views/Shared/_LoggedIn.cshtml";
+                    break;
             }
         }
     }
+}
 
-    <h2>Shopping Cart</h2>
+<h2>Shopping Cart</h2>
 
 @{
     List<int> quantities = new List<int>();
@@ -36,13 +36,10 @@
     //if: if cart empty dysplay cart empty message / else: display product(s) in cart
     if (Session["cart"] == null || Session["cart"].ToString().Equals(""))
     {
-        <h2 style="text-align:center" > Your shopping cart is empty</h2>
+        <h2 style="text-align:center"> Your shopping cart is empty</h2>
     }
     else
     {
-        
-
-
         <table class="table">
             <tr>
                 <th>
@@ -62,8 +59,8 @@
                     @*@Html.DisplayNameFor(model => model.)*@
                 </th>
                 @*<th>
-                    Sub-Total
-                </th>*@   
+                        Sub-Total
+                    </th>*@
             </tr>
             @foreach (var item in Model.products)
             {
@@ -92,27 +89,30 @@
                             }
                         </select>
                     </td>
-                    <td>
+                    <td>     
                         <input type="image" src="~/Content/Images/x-mark.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("removeFromCart", "Products", new { id = item.ProductID })'" />
                     </td>
                 </tr>
                 products.Add(item.ProductID);
                 quantities.Add(1);
-            }    
+            }
         </table>
-                }
+    }
 
-                if (Session["loggedIn"] != null)
-                {
-                    if (Session["cart"] == null || Session["cart"].ToString().Equals(""))
-                    {
-                        //<input type="button" class="btn btn-cart" value="Confirm purchase" />
+    if (Session["loggedIn"] != null)
+    {
+        if (Session["cart"] == null || Session["cart"].ToString().Equals(""))
+        {
+            //<input type="button" class="btn btn-cart" value="Confirm purchase" />
 
-                    }
-                    else
-                    { 
-                           < input type="button" class="btn btn-cart" value="Confirm purchase" onclick="window.location='@Url.Action("confirmCart", "Products", new { @p = products, @q = quantities })'" />
-
+        }
+        else
+        {
+            Session["products"] = products;
+            Session["quantities"] = quantities;
+            ViewBag.products = products;
+            ViewBag.quantities = quantities;
+            <input type="button" class="btn btn-cart" value="Confirm purchase" onclick="window.location='@Url.Action("confirmCart", "Products", new { @p = products, @q = quantities })'" />
         }
     }
     else
@@ -121,7 +121,8 @@
         {
 
         }
-        else { 
+        else
+        {
             <input type="button" class="btn btn-cart" value="Login" onclick="window.location='@Url.Action("Login", "Accounts")'" />
         }
     }

@@ -2,8 +2,6 @@
 
 @{
     ViewBag.Title = "Details";
-    ViewBag.ProdId = Model.ProductID;
-
     if (Session["loggedIn"] != null)
     {
         if ((bool)Session["loggedIn"])
@@ -29,29 +27,27 @@
 }
 <h2>Details</h2>
 
-<div>
-    <h4>Product</h4>
-    <hr />
-<<<<<<< HEAD
-
-    @{ 
-        if (Session["cart"] != null)
+@{
+    if (Session["cart"] != null)
+    {
+        if (Session["cart"].ToString().Contains("," + Model.ProductID.ToString() + ","))
         {
-            if (Session["cart"].ToString().Contains("," + Model.ProductID.ToString() + ","))
-            {
-             <p style="float:right">Already in cart! @Html.ActionLink("View shoping cart?", "ViewShoppingCart") </p>
-            }
-            else
-            {
-                <input type="image" src="~/Content/Images/Add.to.cart.icon2.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("addToCart", "Products", new { id = Model.ProductID})'" />
-            }
+            <p style="float:right">Already in cart! @Html.ActionLink("View shoping cart?", "ViewShoppingCart") </p>
         }
         else
         {
             <input type="image" src="~/Content/Images/Add.to.cart.icon2.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("addToCart", "Products", new { id = Model.ProductID})'" />
         }
     }
-=======
+    else
+    {
+        <input type="image" src="~/Content/Images/Add.to.cart.icon2.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("addToCart", "Products", new { id = Model.ProductID})'" />
+    }
+}
+
+<div>
+    <h4>Product</h4>
+    <hr />
     <div>
         @if (Model.Pictures.FirstOrDefault() == null)
             {
@@ -70,7 +66,6 @@
             </div>
         }
     </div>
->>>>>>> 114cc1bfbb7ef564c81fd575b1fe09ea34f1a94e
 
     <dl class="dl-horizontal">
         <dt>
@@ -84,7 +79,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.UnitPrice)
         </dt>
-        
+
         <dd>
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>

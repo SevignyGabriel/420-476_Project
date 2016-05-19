@@ -72,7 +72,6 @@ namespace _420_476_Project.Controllers
         {
             Session["loggedIn"] = false;
             Session["Name"] = null;
-            Session["UserLogin"] = null;
             return RedirectToAction("Login");
         }
 
@@ -126,8 +125,8 @@ namespace _420_476_Project.Controllers
         {
             if (ModelState.IsValid)
             {
-                
-                //SendMail("jesseck9@hotmail.com");
+                //dont work, git gud
+               //SendMail(user.Email);
                 user.RoleID = 1;
                 byte[] data = System.Text.Encoding.ASCII.GetBytes(user.Password);
                 data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
