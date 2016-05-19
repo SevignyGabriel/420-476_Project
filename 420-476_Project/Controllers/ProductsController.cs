@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using _420_476_Project.Models;
+using _420_476_Project.ViewModels;
 
 namespace _420_476_Project.Controllers
 {
@@ -22,6 +23,66 @@ namespace _420_476_Project.Controllers
             return View(products.ToList());
         }
 
+        public ActionResult addToCart(int? id) 
+        {
+            if (Session["cart"] == null || Session["cart"].ToString() == "")
+            {
+                Session["cart"] = "," + id + ",";
+            }
+            else {
+                Session["cart"] = Session["cart"].ToString() + id + ",";
+            }
+
+            ViewBag.cart = Session["cart"];
+
+            return RedirectToAction("ViewShoppingCart");
+        }
+
+        public ActionResult removeFromCart(int? id)
+        {
+            string rep = "," + id.ToString() + ",";
+
+            Session["cart"] = Session["cart"].ToString().Replace(@"," + id.ToString() + ",", @",");
+
+            if (Session["cart"].ToString() == ",") {
+                Session["cart"] = "";
+            }
+
+            return RedirectToAction("ViewShoppingCart");
+        }
+
+        public ActionResult confirmCart(List<int> p, List<int> q)
+        {
+            Orders order = new Orders();
+            int MAXorderID = db.Orders.Max(o => o.OrderID);
+            order.OrderID = MAXorderID + 1;
+            order.UserLogin = Session["UserLogin"].ToString();
+            order.OrderDate = DateTime.Now;
+            db.Orders.Add(order);
+            
+
+            OrderDetails orderDetail = new OrderDetails();
+            int MAXorderDeatailID = db.OrderDetails.Max(o => o.OrderDetailsID);
+            for (int i = 0; i < p.Count ; i++) {
+                orderDetail.OrderDetailsID = MAXorderDeatailID + (i + 1);
+                orderDetail.Orders.Add(order);
+                orderDetail.ProductID = p[i];
+                orderDetail.Quantity = short.Parse(q[i].ToString());
+                db.OrderDetails.Add(orderDetail);
+            }
+
+            db.SaveChanges();
+
+            Session["cart"] = null;
+
+            return RedirectToAction("commandConfirmation");
+        }
+
+        public ActionResult commandConfirmation()
+        {       
+
+            return View();
+        }
 
         // GET: Products/Details/5
         public ActionResult Details(int? id)
@@ -179,8 +240,95 @@ namespace _420_476_Project.Controllers
 
         public ActionResult ViewShoppingCart()
         {
-            var orderDetails = db.OrderDetails.Include(p => p.Products);
-            return View(orderDetails.ToList());
+            String[] productsID = null;
+            List<Products> products = new List<Products>();
+            CartViewModel cartModel = new CartViewModel();
+
+            //temporary for test purpose
+            if(Session["cart"] == null) {
+                Session["cart"] = "," + "1" + "," + "2" + ",";
+            }
+
+            if (Session["cart"] != null || Session["cart"].ToString() != "") {
+                // Split string on ','. This will separate all the numbers in a string
+                 productsID = Session["cart"].ToString().Split(',');
+                for (int i = 1; i <= (productsID.Count() - 2); i++) {
+                    products.Add(db.Products.Find(Int32.Parse(productsID[i].ToString())));
+                }
+
+                //foreach(var p in productsID) {
+                //     products.Add(db.Products.Find(Int32.Parse(p)));
+                //}
+            }
+            cartModel.products = products;
+
+            return View(cartModel);
         }
+
+        //trash
+        public ActionResult ConfirmShoppingCart()
+        {
+            String[] productsID = null;
+            List<Products> products = new List<Products>();
+            CartViewModel cartModel = new CartViewModel();
+
+            //temporary for test purpose
+            if (Session["cart"] == null)
+            {
+                Session["cart"] = "," + "1" + "," + "2" + ",";
+            }
+
+            if (Session["cart"] != null || Session["cart"].ToString() != "")
+            {
+                // Split string on ','. This will separate all the numbers in a string
+                productsID = Session["cart"].ToString().Split(',');
+                for (int i = 1; i <= (productsID.Count() - 2); i++)
+                {
+                    products.Add(db.Products.Find(Int32.Parse(productsID[i].ToString())));
+                    
+                }
+
+                //foreach(var p in productsID) {
+                //     products.Add(db.Products.Find(Int32.Parse(p)));
+                //}
+            }
+            cartModel.products = products;
+
+            return View(cartModel);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult ViewShoppingCart(string quantity)
+        //{
+        //    String[] productsID = null;
+        //    String[] quantities = null;
+        //    List<Products> products = new List<Products>();
+
+        //    if (Session["cart"] != null){
+        //        productsID = Session["cart"].ToString().Split(',');
+        //        foreach (var p in productsID)
+        //        {
+        //            //quantities.Add();
+        //        }
+        //    }
+
+        //        if (ModelState.IsValid)
+        //    {
+
+        //       //SendMail("jesseck9@hotmail.com");
+        //        user.RoleID = 1;
+        //        byte[] data = System.Text.Encoding.ASCII.GetBytes(user.Password);
+        //        data = new System.Security.Cryptography.SHA256Managed().ComputeHash(data);
+        //        String hash = System.Text.Encoding.ASCII.GetString(data);
+        //        user.Password = hash;
+        //        db.Users.Add(user);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Login");
+        //    }
+
+        //    ViewBag.RoleID = new SelectList(db.Roles, "RoleID", "RoleName", user.RoleID);
+        //    return View();
+        //}
     }
 }

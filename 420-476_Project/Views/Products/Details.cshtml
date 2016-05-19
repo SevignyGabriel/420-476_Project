@@ -2,6 +2,8 @@
 
 @{
     ViewBag.Title = "Details";
+    ViewBag.ProdId = Model.ProductID;
+
     if (Session["loggedIn"] != null)
     {
         if ((bool)Session["loggedIn"])
@@ -31,6 +33,25 @@
 <div>
     <h4>Product</h4>
     <hr />
+
+    @{ 
+        if (Session["cart"] != null)
+        {
+            if (Session["cart"].ToString().Contains("," + Model.ProductID.ToString() + ","))
+            {
+             <p style="float:right">Already in cart! @Html.ActionLink("View shoping cart?", "ViewShoppingCart") </p>
+            }
+            else
+            {
+                <input type="image" src="~/Content/Images/Add.to.cart.icon2.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("addToCart", "Products", new { id = Model.ProductID})'" />
+            }
+        }
+        else
+        {
+            <input type="image" src="~/Content/Images/Add.to.cart.icon2.svg" class="btn btn-addCart" onclick="window.location='@Url.Action("addToCart", "Products", new { id = Model.ProductID})'" />
+        }
+    }
+
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.ProductName)
@@ -43,7 +64,7 @@
         <dt>
             @Html.DisplayNameFor(model => model.UnitPrice)
         </dt>
-
+        
         <dd>
             @Html.DisplayFor(model => model.UnitPrice)
         </dd>
